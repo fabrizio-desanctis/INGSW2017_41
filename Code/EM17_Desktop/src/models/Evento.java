@@ -13,6 +13,7 @@ public class Evento {
 	private String descrizione;
 	private String linkImmagine;
 	
+	//Costruttore di Evento
 	public Evento () {
 		
 	}
