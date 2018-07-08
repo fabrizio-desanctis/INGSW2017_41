@@ -17,7 +17,7 @@ public class Evento {
 		
 	}
 	
-	//ID setter e gette
+	//ID setter e getter
 	public void setId (int id) {
 		this.id=id;
 	}
