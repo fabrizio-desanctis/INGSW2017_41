@@ -1,11 +1,13 @@
 package models;
 
 
+import java.util.GregorianCalendar;
 
 public class Evento {
 	private int id;
 	private String nome;
 	private String tipologia;
+	private GregorianCalendar data;
 	private String luogo;
 	private String località;
 	private float prezzo;
@@ -15,7 +17,7 @@ public class Evento {
 	
 	//Costruttore di Evento
 	public Evento () {
-		
+		data= new GregorianCalendar();
 	}
 	
 	//ID setter e getter
@@ -43,6 +45,16 @@ public class Evento {
 	
 	public String getTipologia () {
 		return this.tipologia;
+	}
+	
+	//Data setter e getter
+	public void setData (int giorno,int mese,int anno,int ora,int minuto) {
+		data.set(anno, mese-1, giorno, ora, minuto);
+		
+	}
+	
+	public GregorianCalendar getData () {
+		return data;
 	}
 	
 	//Luogo setter e getter
