@@ -6,6 +6,12 @@ import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
+
+/**
+*
+* @author Fabrizio De Sanctis
+*/
+
 public class LoginFormController {
 
 	

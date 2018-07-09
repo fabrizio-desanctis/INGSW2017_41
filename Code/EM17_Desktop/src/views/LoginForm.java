@@ -11,11 +11,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
-import javax.swing.event.CaretListener;
-import javax.swing.event.CaretEvent;
 import controllers.LoginFormController;
-import controllers.LoginFormController.AccediCaretListener;
 
+
+/**
+*
+* @author Fabrizio De Sanctis
+*/
 
 public class LoginForm {
 

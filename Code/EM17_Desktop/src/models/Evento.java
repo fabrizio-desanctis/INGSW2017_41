@@ -1,7 +1,12 @@
 package models;
 
-
 import java.util.GregorianCalendar;
+
+
+/**
+*
+* @author Fabrizio De Sanctis
+*/
 
 public class Evento {
 	private int id;
