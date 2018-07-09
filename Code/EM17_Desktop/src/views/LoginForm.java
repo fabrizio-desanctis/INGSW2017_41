@@ -1,0 +1,128 @@
+package views;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Window.Type;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
+
+
+public class LoginForm {
+
+	private JFrame frmEmLogin;
+	private JTextField usernameField;
+	private JPasswordField passwordField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginForm window = new LoginForm();
+					window.frmEmLogin.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public LoginForm() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmEmLogin = new JFrame("Home");
+		frmEmLogin.setTitle("EM'17 - Login");
+		frmEmLogin.setType(Type.UTILITY);
+		frmEmLogin.setBounds(100, 100, 450, 300);
+		frmEmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEmLogin.getContentPane().setLayout(null);
+		
+		JLabel em17Label = new JLabel("EM'17");
+		em17Label.setBounds(134, 11, 168, 71);
+		em17Label.setVerticalAlignment(SwingConstants.TOP);
+		em17Label.setFont(new Font("Arial Black", Font.PLAIN, 50));
+		frmEmLogin.getContentPane().add(em17Label);
+		
+		JLabel usernameLabel = new JLabel("USERNAME");
+		usernameLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));
+		usernameLabel.setBounds(88, 109, 91, 19);
+		frmEmLogin.getContentPane().add(usernameLabel);
+		
+		JLabel passwordLabel = new JLabel("PASSWORD");
+		passwordLabel.setFont(new Font("Arial Black", Font.PLAIN, 13));
+		passwordLabel.setBounds(88, 150, 91, 19);
+		frmEmLogin.getContentPane().add(passwordLabel);
+		
+		
+		
+		JButton accediButton = new JButton("ACCEDI");
+		accediButton.setFont(new Font("Arial Black", Font.BOLD, 12));
+		accediButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		accediButton.setBounds(134, 194, 168, 33);
+		frmEmLogin.getContentPane().add(accediButton);
+		accediButton.setEnabled(false);
+		
+		
+		usernameField = new JTextField();
+		usernameField.setBounds(189, 109, 150, 20);
+		frmEmLogin.getContentPane().add(usernameField);
+		usernameField.setColumns(10);
+		
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(191, 151, 148, 20);
+		frmEmLogin.getContentPane().add(passwordField);
+		
+		AccediCaretListener myCaretListener = new AccediCaretListener(accediButton,passwordField,usernameField);
+		passwordField.addCaretListener(myCaretListener);
+		usernameField.addCaretListener(myCaretListener);
+		
+	}
+	/*Questa classe interna gestisce il modo in cui il tasto Accedi si abilita/disabilita*/
+	public class AccediCaretListener implements CaretListener {
+		private JButton accediButton;
+		private JPasswordField passwordField;
+		private JTextField usernameField;
+		
+		public AccediCaretListener (JButton accediButton,JPasswordField passwordField,JTextField usernameField) {
+			this.accediButton=accediButton;
+			this.passwordField=passwordField;
+			this.usernameField=usernameField;
+		}
+		
+		public void caretUpdate(CaretEvent e) {
+			if(passwordField.getPassword().length >0 && usernameField.getText().length() >0)
+				accediButton.setEnabled(true);
+			else accediButton.setEnabled(false);
+		}
+	}
+}
+
+
+
+ 

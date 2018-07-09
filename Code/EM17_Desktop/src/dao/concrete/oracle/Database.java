@@ -20,8 +20,8 @@ public class Database {
     private String host = "127.0.0.1";
     private String service = "xe";
     private int port = 1521;
-    private String user = "GCI16";
-    private String password = "GCI16";
+    private String user = "fabrizio";
+    private String password = "230495";
     private Connection conn;
     private final int connections; //total number of connections.
     
