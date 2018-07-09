@@ -49,12 +49,12 @@ public class Evento {
 	
 	//Data setter e getter
 	public void setData (int giorno,int mese,int anno,int ora,int minuto) {
-		data.set(anno, mese-1, giorno, ora, minuto);
+		this.data.set(anno, mese-1, giorno, ora, minuto);
 		
 	}
 	
 	public GregorianCalendar getData () {
-		return data;
+		return this.data;
 	}
 	
 	//Luogo setter e getter
