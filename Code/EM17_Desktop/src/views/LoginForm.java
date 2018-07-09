@@ -12,8 +12,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
 
