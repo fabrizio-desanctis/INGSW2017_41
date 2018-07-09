@@ -1,6 +1,6 @@
-package dao.concrete.oracle;
+package models.dao.concrete.oracle;
 
-import dao.interfaces.EventoDAO;
+import models.dao.interfaces.EventoDAO;
 import models.Evento;
 import java.util.LinkedList;
 

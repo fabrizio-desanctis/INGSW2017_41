@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -14,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
+import controllers.LoginFormController;
+import controllers.LoginFormController.AccediCaretListener;
 
 
 public class LoginForm {
@@ -95,30 +96,13 @@ public class LoginForm {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(191, 151, 148, 20);
 		frmEmLogin.getContentPane().add(passwordField);
-		
-		AccediCaretListener myCaretListener = new AccediCaretListener(accediButton,passwordField,usernameField);
+		LoginFormController controller = new LoginFormController();
+		LoginFormController.AccediCaretListener myCaretListener = controller.new AccediCaretListener(accediButton,passwordField,usernameField);;
 		passwordField.addCaretListener(myCaretListener);
 		usernameField.addCaretListener(myCaretListener);
 		
 	}
-	/*Questa classe interna gestisce il modo in cui il tasto Accedi si abilita/disabilita*/
-	public class AccediCaretListener implements CaretListener {
-		private JButton accediButton;
-		private JPasswordField passwordField;
-		private JTextField usernameField;
-		
-		public AccediCaretListener (JButton accediButton,JPasswordField passwordField,JTextField usernameField) {
-			this.accediButton=accediButton;
-			this.passwordField=passwordField;
-			this.usernameField=usernameField;
-		}
-		
-		public void caretUpdate(CaretEvent e) {
-			if(passwordField.getPassword().length >0 && usernameField.getText().length() >0)
-				accediButton.setEnabled(true);
-			else accediButton.setEnabled(false);
-		}
-	}
+	
 }
 
 

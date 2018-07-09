@@ -1,4 +1,4 @@
-package dao.interfaces;
+package models.dao.interfaces;
 
 import models.Evento;
 import java.util.LinkedList;
