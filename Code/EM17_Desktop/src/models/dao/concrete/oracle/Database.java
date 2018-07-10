@@ -12,6 +12,11 @@ import java.util.logging.Logger;
 import oracle.jdbc.pool.OracleDataSource;
 
 
+/**
+*
+* @author Fabrizio De Sanctis
+*/
+
 public class Database {
     private static Database instance;
     private OracleDataSource ods;
