@@ -4,14 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-
-
 import controllers.MainMenuController;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 
 
 /**
@@ -39,6 +34,7 @@ public class MainMenuWindows {
 		frame.setBounds(100, 100, 450, 338);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("EM'17 - Menù");
 		
 		JLabel em17Label = new JLabel("EM'17");
 		em17Label.setVerticalAlignment(SwingConstants.TOP);
@@ -58,10 +54,6 @@ public class MainMenuWindows {
 		frame.getContentPane().add(logoutButton);
 		
 		JButton inserireNuovoEventoButton = new JButton("INSERIRE NUOVO EVENTO");
-		inserireNuovoEventoButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		inserireNuovoEventoButton.setFont(new Font("Arial Black", Font.BOLD, 8));
 		inserireNuovoEventoButton.setBounds(115, 93, 199, 34);
 		frame.getContentPane().add(inserireNuovoEventoButton);
@@ -84,6 +76,8 @@ public class MainMenuWindows {
 		MainMenuController controller = new MainMenuController(); //Istanzia controller
 		MainMenuController.LogoutListener myLogoutListener = controller.new LogoutListener();
 		logoutButton.addActionListener(myLogoutListener);
+		MainMenuController.InserisciEventoListener myInserisciListener = controller.new InserisciEventoListener();
+		inserireNuovoEventoButton.addActionListener(myInserisciListener);
 	}
 	
 	public JFrame getJFrame() {

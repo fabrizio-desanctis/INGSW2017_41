@@ -12,6 +12,7 @@ import java.awt.Window.Type;
 import controllers.LoginFormController;
 
 
+
 /**
 *
 * @author Fabrizio De Sanctis
@@ -39,7 +40,9 @@ public class LoginForm {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
+	
 	private void initialize() {
 		frmEmLogin = new JFrame("Home");
 		frmEmLogin.setTitle("EM'17 - Login");

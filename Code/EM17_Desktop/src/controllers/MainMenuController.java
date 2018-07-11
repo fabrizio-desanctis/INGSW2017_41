@@ -6,6 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import views.MainMenuWindows;
 
+
+/**
+*
+* @author Fabrizio De Sanctis
+*/
+
 public class MainMenuController {
 	private static JFrame myFrame;
 	
@@ -33,7 +39,7 @@ public class MainMenuController {
 		myFrame.setVisible(true);
 	}
 	
-	/*Questa classe interna gestisce il funzionamento del tasto Accedi*/
+	/*Questa classe interna gestisce il funzionamento del tasto Logout*/
 	public class LogoutListener implements ActionListener {
 		
 		public LogoutListener () {
@@ -42,6 +48,18 @@ public class MainMenuController {
 		public void actionPerformed(ActionEvent arg0) {
 			setInvisible();
 			LoginFormController.setVisible();
+		}
+	}
+	
+	/*Questa classe interna gestisce il funzionamento del tasto Inserisci nuovo evento*/
+	public class InserisciEventoListener implements ActionListener {
+		
+		public InserisciEventoListener () {
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			setInvisible();
+			InserisciEventoController.start();
 		}
 	}
 

@@ -116,3 +116,4 @@ public class Evento {
 		return this.linkImmagine;
 	}
 }
+
