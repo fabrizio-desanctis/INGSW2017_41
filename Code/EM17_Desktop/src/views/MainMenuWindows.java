@@ -5,8 +5,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import controllers.MainMenuController;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
+
 
 
 /**
@@ -49,7 +50,7 @@ public class MainMenuWindows {
 		frame.getContentPane().add(LogoutLabel);
 		
 		JButton logoutButton = new JButton("");
-		logoutButton.setIcon(new ImageIcon("C:\\Users\\fabri\\git\\INGSW2017_41\\Code\\EM17_Desktop\\src\\logout.png"));
+		logoutButton.setIcon(new ImageIcon(MainMenuWindows.class.getResource("/logout.png")));
 		logoutButton.setBounds(23, 22, 22, 22);
 		frame.getContentPane().add(logoutButton);
 		
