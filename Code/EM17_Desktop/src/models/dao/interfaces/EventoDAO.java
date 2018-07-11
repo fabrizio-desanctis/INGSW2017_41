@@ -2,6 +2,7 @@ package models.dao.interfaces;
 
 import models.Evento;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 /**
 *
@@ -11,5 +12,7 @@ import java.util.LinkedList;
 public interface EventoDAO {
 
 	public LinkedList<Evento> getListaEventi ();
+	public TreeSet<String> getListaLocalita();
+	public boolean createNewEvento(Evento e);
 	
 }

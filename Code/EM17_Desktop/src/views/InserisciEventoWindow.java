@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import java.awt.TextArea;
 import javax.swing.JButton;
+import java.awt.Color;
 
 
 /**
@@ -82,6 +83,8 @@ public class InserisciEventoWindow {
 		frame.getContentPane().add(nomeEventoLabel);
 		
 		nomeEventoField = new JTextField();
+		
+		nomeEventoField.setBackground(Color.WHITE);
 		nomeEventoField.setFont(new Font("Arial", Font.BOLD, 11));
 		nomeEventoField.setBounds(135, 127, 113, 20);
 		frame.getContentPane().add(nomeEventoField);
@@ -218,11 +221,6 @@ public class InserisciEventoWindow {
 		InfoLabel.setBounds(184, 46, 276, 71);
 		frame.getContentPane().add(InfoLabel);
 		
-		JLabel lblmax = new JLabel("(max. 500 caratteri)");
-		lblmax.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lblmax.setBounds(20, 246, 107, 14);
-		frame.getContentPane().add(lblmax);
-		
 		JLabel lblFacoltativo = new JLabel("(*) Facoltativo.");
 		lblFacoltativo.setBounds(20, 315, 107, 14);
 		frame.getContentPane().add(lblFacoltativo);
@@ -257,7 +255,11 @@ public class InserisciEventoWindow {
 	    InserisciEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC);
 	    myFilterBiglietti.setNegativeAccepted(false);
 	    nrBigliettiField.setDocument(myFilterBiglietti);
-		
+	    InserisciEventoController.addItemToComboBox(localitaComboBox);
+	    InserisciEventoController.ConfermaListener myConferma = controller.new ConfermaListener(avantiButton,nomeEventoField,luogoField,eurField,centField,
+				nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea);
+	    avantiButton.addActionListener(myConferma);
+	    
 	}
 	
 	public JFrame getJFrame() {

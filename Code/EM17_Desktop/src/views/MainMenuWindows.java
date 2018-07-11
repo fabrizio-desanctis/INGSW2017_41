@@ -59,6 +59,7 @@ public class MainMenuWindows {
 		inserireNuovoEventoButton.setBounds(115, 93, 199, 34);
 		frame.getContentPane().add(inserireNuovoEventoButton);
 		
+		
 		JButton modificaEventoButton = new JButton("MODIFICA EVENTO ESISTENTE");
 		modificaEventoButton.setFont(new Font("Arial Black", Font.BOLD, 8));
 		modificaEventoButton.setBounds(115, 138, 199, 34);
