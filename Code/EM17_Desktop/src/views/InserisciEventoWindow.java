@@ -13,9 +13,9 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
-import java.awt.TextArea;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JTextArea;
 
 
 /**
@@ -31,6 +31,7 @@ public class InserisciEventoWindow {
 	private JTextField eurField;
 	private JTextField nrBigliettiField;
 	private JTextField centField;
+	private JTextField linkImmagineField;
 
 
 	/**
@@ -46,7 +47,7 @@ public class InserisciEventoWindow {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 573, 469);
+		frame.setBounds(100, 100, 573, 484);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("EM'17 - Inserisci nuovo evento");
@@ -192,7 +193,7 @@ public class InserisciEventoWindow {
 		separator_7.setBounds(306, 340, 238, 2);
 		frame.getContentPane().add(separator_7);
 		
-		TextArea descrizioneTextArea = new TextArea();
+		JTextArea descrizioneTextArea = new JTextArea();
 		descrizioneTextArea.setFont(new Font("Arial", Font.BOLD, 11));
 		descrizioneTextArea.setBounds(135, 232, 409, 95);
 		frame.getContentPane().add(descrizioneTextArea);
@@ -203,7 +204,7 @@ public class InserisciEventoWindow {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		indietroButton.setBounds(10, 365, 162, 41);
+		indietroButton.setBounds(10, 391, 162, 41);
 		frame.getContentPane().add(indietroButton);
 		
 		JButton avantiButton = new JButton("CONFERMA");
@@ -212,7 +213,7 @@ public class InserisciEventoWindow {
 			}
 		});
 		avantiButton.setFont(new Font("Arial Black", Font.BOLD, 12));
-		avantiButton.setBounds(382, 365, 162, 41);
+		avantiButton.setBounds(382, 391, 162, 41);
 		frame.getContentPane().add(avantiButton);
 		
 		JLabel InfoLabel = new JLabel("Aggiungi nuovo evento");
@@ -243,22 +244,49 @@ public class InserisciEventoWindow {
 	    frame.getContentPane().add(eurLabel);
 	    
 	    
+	    JLabel linkImmagineLabel = new JLabel("Link immagine:");
+	    linkImmagineLabel.setFont(new Font("Arial Black", Font.BOLD, 11));
+	    linkImmagineLabel.setBounds(20, 353, 107, 14);
+	    frame.getContentPane().add(linkImmagineLabel);
+	    
+	    linkImmagineField = new JTextField();
+	    linkImmagineField.setBounds(135, 351, 409, 20);
+	    frame.getContentPane().add(linkImmagineField);
+	    linkImmagineField.setColumns(10);
+	    
+	    JSeparator separator_8 = new JSeparator();
+	    separator_8.setBounds(10, 378, 306, 2);
+	    frame.getContentPane().add(separator_8);
+	    
+	    JSeparator separator_9 = new JSeparator();
+	    separator_9.setBounds(306, 378, 238, 2);
+	    frame.getContentPane().add(separator_9);
+	    
+	    
+	    
 	    InserisciEventoController controller = new InserisciEventoController(); //Istanzia controller
 		InserisciEventoController.AnnullaListener myAnnullaListener = controller.new AnnullaListener();
 		indietroButton.addActionListener(myAnnullaListener);
-		InserisciEventoController.JTextFieldFilter myFilterEur = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC);
+		InserisciEventoController.JTextFieldFilter myFilterEur = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,8);
 	    myFilterEur.setNegativeAccepted(false);
 	    eurField.setDocument(myFilterEur);
-	    InserisciEventoController.JTextFieldFilter myFilterCent = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC);
+	    InserisciEventoController.JTextFieldFilter myFilterCent = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,2);
 	    myFilterCent.setNegativeAccepted(false);
 	    centField.setDocument(myFilterCent);
-	    InserisciEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC);
+	    InserisciEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,10);
 	    myFilterBiglietti.setNegativeAccepted(false);
 	    nrBigliettiField.setDocument(myFilterBiglietti);
 	    InserisciEventoController.addItemToComboBox(localitaComboBox);
-	    InserisciEventoController.ConfermaListener myConferma = controller.new ConfermaListener(avantiButton,nomeEventoField,luogoField,eurField,centField,
-				nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea);
+	    InserisciEventoController.ConfermaListener myConferma = controller.new ConfermaListener(nomeEventoField,luogoField,eurField,centField,
+		nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea,linkImmagineField);
 	    avantiButton.addActionListener(myConferma);
+	    //Limite caratteri per i campi di testo.
+	    nomeEventoField.setDocument(controller.new JTextFieldLimit(100));
+	    luogoField.setDocument(controller.new JTextFieldLimit(30));
+	    nrBigliettiField.setDocument(controller.new JTextFieldLimit(15));
+	    linkImmagineField.setDocument(controller.new JTextFieldLimit(100));
+	    descrizioneTextArea.setDocument(controller.new JTextFieldLimit(2000));
+	   
 	    
 	}
 	

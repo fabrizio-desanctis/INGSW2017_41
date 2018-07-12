@@ -56,6 +56,7 @@ public boolean createNewEvento(Evento e) {
     try {
         Database.getInstance().execQuery(query, params);
     } catch (SQLException ex) {
+    	System.err.println(ex.getMessage());
         return false;
     }
     

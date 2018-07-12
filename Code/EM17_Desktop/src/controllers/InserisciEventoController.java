@@ -1,11 +1,10 @@
 package controllers;
 
 import java.awt.EventQueue;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,9 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-
+import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
-
 import models.Evento;
 import models.dao.concrete.oracle.EventoOracleDAO;
 import models.dao.interfaces.EventoDAO;
@@ -69,10 +67,16 @@ private static JFrame myFrame;
 		}
 		
 		public void actionPerformed(ActionEvent arg0) {
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(myFrame, "Le modifiche verranno annullate.\n Confermi?\n", "Annulla", dialogButton);
+			if(dialogResult == 0) {
 			setInvisible();
 			MainMenuController.setVisible();
-		}
+			}
 	}
+	}
+	
+	
 	
 	/*Questa classe interna gestisce il funzionamento dei campi relativi a prezzo e numero biglietti*/
 	public class JTextFieldFilter extends PlainDocument {
@@ -83,17 +87,17 @@ private static JFrame myFrame;
 		  public static final String ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		  public static final String NUMERIC = "0123456789";
 		  public static final String ALPHA_NUMERIC = ALPHA + NUMERIC;
+		  private int limit;
+		  
 
 		  protected String acceptedChars = null;
 
 		  protected boolean negativeAccepted = false;
 
-		  public JTextFieldFilter() {
-		    this(ALPHA_NUMERIC);
-		  }
 
-		  public JTextFieldFilter(String acceptedchars) {
+		  public JTextFieldFilter(String acceptedchars,int limit) {
 		    acceptedChars = acceptedchars;
+		    this.limit=limit;
 		  }
 
 		  public void setNegativeAccepted(boolean negativeaccepted) {
@@ -112,7 +116,7 @@ private static JFrame myFrame;
 		    }
 
 		    if (negativeAccepted) {
-		      if (str.indexOf(".") != -1) {
+		      if (str.indexOf(".") != -1 ) {
 		        if (getText(0, getLength()).indexOf(".") != -1) {
 		          return;
 		        }
@@ -124,10 +128,39 @@ private static JFrame myFrame;
 		        return;
 		      }
 		    }
-
+		    if ((getLength() + str.length()) <= limit) {
 		    super.insertString(offset, str, attr);
+		    }
 		  }
 		}
+	
+	/*Questa classe interna si occupa di impostare un limite di caratteri per un campo di testo*/
+	public class JTextFieldLimit extends PlainDocument {
+		  /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4475067315478169054L;
+		private int limit;
+		public JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+	
 	
 	public class ConfermaListener implements ActionListener {
 		private JTextField nomeEventoField;
@@ -135,7 +168,7 @@ private static JFrame myFrame;
 		private JTextField eurField;
 		private JTextField nrBigliettiField;
 		private JTextField centField;
-		private JButton confermaButton;
+		private JTextField linkImmagineField;
 		@SuppressWarnings("rawtypes")
 		JComboBox tipologiaComboBox;
 		@SuppressWarnings("rawtypes")
@@ -145,14 +178,13 @@ private static JFrame myFrame;
 		@SuppressWarnings("rawtypes")
 		JComboBox localitaComboBox;
 		JDateChooser dateChooser;
-		TextArea descrizioneTextArea;
+		JTextArea descrizioneTextArea;
 		
 		
 		@SuppressWarnings("rawtypes")
-		public ConfermaListener (JButton confermaButton,JTextField nomeEvento,JTextField luogo,JTextField eur,JTextField cent,
+		public ConfermaListener (JTextField nomeEvento,JTextField luogo,JTextField eur,JTextField cent,
 				JTextField nrBiglietti,JComboBox tipologia,JComboBox hour,JComboBox minute,JComboBox localita,JDateChooser date,
-				TextArea descrizione) {
-			this.confermaButton=confermaButton;
+				JTextArea descrizione,JTextField linkImmagine) {
 			this.nomeEventoField=nomeEvento;
 			this.luogoField=luogo;
 			this.eurField=eur;
@@ -164,6 +196,7 @@ private static JFrame myFrame;
 			this.localitaComboBox=localita;
 			this.dateChooser=date;
 			this.descrizioneTextArea=descrizione;
+			this.linkImmagineField=linkImmagine;
 			
 		}
 
@@ -193,9 +226,15 @@ private static JFrame myFrame;
 				errori=true;
 			}
 			
+			if(linkImmagineField.getText().length()==0) {
+				reportError+="Link immagine non inserito.\n";
+				errori=true;
+			}
+			
 			Date date=dateChooser.getDate();
-			date.setHours((int)hourComboBox.getSelectedIndex());
-			date.setMinutes((int)minuteComboBox.getSelectedIndex());
+			date.setHours(hourComboBox.getSelectedIndex());
+			date.setMinutes(Integer.valueOf((String)minuteComboBox.getSelectedItem()));
+			
 			
 			
 			
@@ -207,7 +246,7 @@ private static JFrame myFrame;
 				if(descrizioneTextArea.getText().length()>0)
 				myEvento.setDescrizione(descrizioneTextArea.getText());
 				myEvento.setId(1);
-				myEvento.setLinkImmagine("http//");
+				myEvento.setLinkImmagine(linkImmagineField.getText());
 				myEvento.setLocalità((String)localitaComboBox.getSelectedItem());
 				myEvento.setLuogo(luogoField.getText());
 				myEvento.setNumeroBiglietti(Integer.parseInt(nrBigliettiField.getText()));
@@ -215,11 +254,31 @@ private static JFrame myFrame;
 				myEvento.setPrezzo(Float.parseFloat(prezzo));
 				myEvento.setTipologia((String)tipologiaComboBox.getSelectedItem());
 				EventoDAO ed = new EventoOracleDAO();
+				String myMessage = new String();
+				myMessage= "TIPOLOGIA: "+ myEvento.getTipologia()+"\n";;
+				myMessage+= "NOME EVENTO: "+myEvento.getNome()+"\n";
+				SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				String dateFormat = dataFormat.format(myEvento.getData());
+				myMessage+= "DATA:" + dateFormat + "\n";
+				myMessage+= "LUOGO: " + myEvento.getLuogo() + "\n";
+				myMessage+= "LOCALITA': " + myEvento.getLocalità() + "\n";
+				myMessage+= "PREZZO: " + myEvento.getPrezzo() + "€\n";
+				myMessage+= "LINK: " + myEvento.getLinkImmagine()+"\n";
+				myMessage+= "DESCRIZIONE: "+ myEvento.getDescrizione()+"\n";
+				myMessage+= "\nConfermi?\n";
 				
-				if(ed.createNewEvento(myEvento))
-					JOptionPane.showMessageDialog(myFrame,"Evento inserito correttamente.","Evento inserito", 1);
-				else {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(myFrame, myMessage, "Conferma inserimento", dialogButton);
+				if(dialogResult == 0) {
+					if(ed.createNewEvento(myEvento)) {
+						JOptionPane.showMessageDialog(myFrame,"Evento inserito correttamente.","Evento inserito", 1);
+						setInvisible();
+						MainMenuController.setVisible();
+					}
+					else {
 					JOptionPane.showMessageDialog(myFrame,"Impossibile aggiungere evento.","Evento non inserito", 0);	
+					} 
+					
 				}
 			}
 			
