@@ -80,6 +80,8 @@ public class MainMenuWindows {
 		logoutButton.addActionListener(myLogoutListener);
 		MainMenuController.InserisciEventoListener myInserisciListener = controller.new InserisciEventoListener();
 		inserireNuovoEventoButton.addActionListener(myInserisciListener);
+		MainMenuController.ModificaEventoListener myModificaListener = controller.new ModificaEventoListener();
+		modificaEventoButton.addActionListener(myModificaListener);
 	}
 	
 	public JFrame getJFrame() {

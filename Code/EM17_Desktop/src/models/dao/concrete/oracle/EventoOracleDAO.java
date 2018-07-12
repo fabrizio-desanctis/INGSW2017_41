@@ -4,15 +4,42 @@ import models.dao.interfaces.EventoDAO;
 import models.Evento;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class EventoOracleDAO implements EventoDAO{
 	
 @Override
-public LinkedList<Evento> getListaEventi () {
-	return new LinkedList<Evento> ();
+public LinkedList<Evento> getListaEventi () throws ParseException {
+	String query = "select * from Evento order by id " ;
+	ArrayList<Object> params = null;
+	LinkedList<Evento> list = new LinkedList<Evento>();
+	Date today = new Date(System.currentTimeMillis());
+	
+	try {
+		ResultSet rs = Database.getInstance().execQuery(query, params);
+		if(rs!= null){
+			while(rs.next()){
+				try {
+					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
+			        Date bbDate;
+			        bbDate = sdf.parse(rs.getString("DATA"));
+				Evento e= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LUOGO"),rs.getInt("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+				if(today.before(e.getData()))
+				list.add(e);
+				}catch (ParseException e) {  System.err.println(e.getMessage());}
+				
+				
+			}
+		}
+	} catch (SQLException ex) { list=null;
+	}
+	return list;
 }
 
 @Override
@@ -38,8 +65,8 @@ public TreeSet<String> getListaLocalita () {
 
 public boolean createNewEvento(Evento e) {
 	ArrayList<Object> params = new ArrayList<>();
-    String query = "INSERT INTO EVENTO (ID,NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE) VALUES(id_event_sequence.nextval,?,"
-    		+ "?,?,?,?,?,?,?)";
+    String query = "INSERT INTO EVENTO (ID,NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE,TIPOLOGIA) VALUES(id_event_sequence.nextval,?,"
+    		+ "?,?,?,?,?,?,?,?)";
     
     params.add(e.getNome());
     params.add(e.getData().toString());
@@ -53,6 +80,7 @@ public boolean createNewEvento(Evento e) {
     	params.add(e.getDescrizione());
     }
     params.add(e.getLinkImmagine());
+    params.add(e.getTipologia());
     try {
         Database.getInstance().execQuery(query, params);
     } catch (SQLException ex) {

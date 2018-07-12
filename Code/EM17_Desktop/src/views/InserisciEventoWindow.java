@@ -16,6 +16,7 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JTextArea;
+import javax.swing.JPanel;
 
 
 /**
@@ -48,7 +49,7 @@ public class InserisciEventoWindow {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 573, 484);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("EM'17 - Inserisci nuovo evento");
 		
@@ -193,10 +194,17 @@ public class InserisciEventoWindow {
 		separator_7.setBounds(306, 340, 238, 2);
 		frame.getContentPane().add(separator_7);
 		
+		JPanel panel = new JPanel();
+		panel.setBounds(135, 232, 409, 95);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
 		JTextArea descrizioneTextArea = new JTextArea();
+		descrizioneTextArea.setBounds(0, 0, 409, 95);
+		panel.add(descrizioneTextArea);
 		descrizioneTextArea.setFont(new Font("Arial", Font.BOLD, 11));
-		descrizioneTextArea.setBounds(135, 232, 409, 95);
-		frame.getContentPane().add(descrizioneTextArea);
+		//Limite caratteri per il campo descrizione
+		
 		
 		JButton indietroButton = new JButton("ANNULLA");
 		indietroButton.setFont(new Font("Arial Black", Font.BOLD, 12));
@@ -265,27 +273,36 @@ public class InserisciEventoWindow {
 	    
 	    
 	    InserisciEventoController controller = new InserisciEventoController(); //Istanzia controller
+	    //Listener per il tasto Annulla
 		InserisciEventoController.AnnullaListener myAnnullaListener = controller.new AnnullaListener();
 		indietroButton.addActionListener(myAnnullaListener);
+		//Limite caratteri per il campo prezzo (eur)
 		InserisciEventoController.JTextFieldFilter myFilterEur = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,8);
 	    myFilterEur.setNegativeAccepted(false);
 	    eurField.setDocument(myFilterEur);
+	    //Limite caratteri per il campo prezzo (cent)
 	    InserisciEventoController.JTextFieldFilter myFilterCent = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,2);
 	    myFilterCent.setNegativeAccepted(false);
 	    centField.setDocument(myFilterCent);
+	    //Limite caratteri per il campo numero biglietti
 	    InserisciEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,10);
 	    myFilterBiglietti.setNegativeAccepted(false);
 	    nrBigliettiField.setDocument(myFilterBiglietti);
+	    //Aggiungi item alla combobox per le localita.
 	    InserisciEventoController.addItemToComboBox(localitaComboBox);
 	    InserisciEventoController.ConfermaListener myConferma = controller.new ConfermaListener(nomeEventoField,luogoField,eurField,centField,
-		nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea,linkImmagineField);
+		  		nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea,linkImmagineField);
 	    avantiButton.addActionListener(myConferma);
 	    //Limite caratteri per i campi di testo.
 	    nomeEventoField.setDocument(controller.new JTextFieldLimit(100));
+	    //Limite caratteri per il campo luogo
 	    luogoField.setDocument(controller.new JTextFieldLimit(30));
-	    nrBigliettiField.setDocument(controller.new JTextFieldLimit(15));
+	    //Limite caratteri per il campo link
 	    linkImmagineField.setDocument(controller.new JTextFieldLimit(100));
-	    descrizioneTextArea.setDocument(controller.new JTextFieldLimit(2000));
+	    //Listener sul frame per gestirne la chiusura
+	    frame.addWindowListener(controller.new MyWindowListener());
+	  //Listener per il tasto Conferma
+	  		
 	   
 	    
 	}

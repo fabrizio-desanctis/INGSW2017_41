@@ -1,6 +1,8 @@
 package models.dao.interfaces;
 
 import models.Evento;
+
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
@@ -11,7 +13,7 @@ import java.util.TreeSet;
 
 public interface EventoDAO {
 
-	public LinkedList<Evento> getListaEventi ();
+	public LinkedList<Evento> getListaEventi () throws ParseException;
 	public TreeSet<String> getListaLocalita();
 	public boolean createNewEvento(Evento e);
 	

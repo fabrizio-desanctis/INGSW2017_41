@@ -25,6 +25,18 @@ public class Evento {
 		
 	}
 	
+	public Evento(int id,String nome,String tipo,Date date,String luogo,float prezzo,int biglietti,String desc,String link) {
+		this.id=id;
+		this.nome=nome;
+		this.tipologia=tipo;
+		this.data=date;
+		this.luogo=luogo;
+		this.prezzo=prezzo;
+		this.numeroBiglietti=biglietti;
+		this.descrizione=desc;
+		this.linkImmagine=link;
+	}
+	
 	//ID setter e getter
 	public void setId (int id) {
 		this.id=id;

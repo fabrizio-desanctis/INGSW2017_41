@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import views.MainMenuWindows;
-
+import controllers.SelezionaEventoController;
 
 /**
 *
@@ -60,6 +60,18 @@ public class MainMenuController {
 		public void actionPerformed(ActionEvent arg0) {
 			setInvisible();
 			InserisciEventoController.start();
+		}
+	}
+	
+	/*Questa classe interna gestisce il funzionamento del tasto Inserisci nuovo evento*/
+	public class ModificaEventoListener implements ActionListener {
+		
+		public ModificaEventoListener () {
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			setInvisible();
+			SelezionaEventoController.start(1);
 		}
 	}
 
