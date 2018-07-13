@@ -82,6 +82,8 @@ public class MainMenuWindows {
 		inserireNuovoEventoButton.addActionListener(myInserisciListener);
 		MainMenuController.ModificaEventoListener myModificaListener = controller.new ModificaEventoListener();
 		modificaEventoButton.addActionListener(myModificaListener);
+		MainMenuController.EliminaEventoListener myEliminaListener = controller.new EliminaEventoListener();
+		eliminaEventoButton.addActionListener(myEliminaListener);
 	}
 	
 	public JFrame getJFrame() {

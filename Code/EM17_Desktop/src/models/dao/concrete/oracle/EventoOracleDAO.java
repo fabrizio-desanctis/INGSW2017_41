@@ -29,9 +29,9 @@ public LinkedList<Evento> getListaEventi () throws ParseException {
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
 			        Date bbDate;
 			        bbDate = sdf.parse(rs.getString("DATA"));
-				Evento e= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LUOGO"),rs.getInt("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
-				if(today.before(e.getData()))
-				list.add(e);
+			        Evento e= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+						if(today.before(e.getData()))
+							list.add(e);
 				}catch (ParseException e) {  System.err.println(e.getMessage());}
 				
 				
@@ -90,6 +90,53 @@ public boolean createNewEvento(Evento e) {
     
     return true;
 }
+
+
+@Override
+public boolean deleteEvento(Evento e){
+    ArrayList<Object> params = new ArrayList<>();
+    String query = "DELETE FROM EVENTO WHERE NOME = ? AND DATA = ?";
+    params.add(e.getNome());
+    params.add(e.getData().toString());
+    try {
+        Database.getInstance().execQuery(query, params);
+    } catch (SQLException ex) {
+        System.err.println(ex.getMessage());
+        return false;
+    }
+    return true;
+}
+
+
+@Override
+public boolean updateEvento(Evento e){
+    ArrayList<Object> params = new ArrayList<>();
+    String query = "UPDATE EVENTO SET  NOME = ?,DATA = ?,LUOGO = ?,LOCALITA = ?, PREZZO = ?,NRBIGLIETTI = ?,DESCRIZIONE = ?,LINKIMMAGINE = ?,TIPOLOGIA = ? WHERE ID = ?";
+    params.add(e.getNome());
+    params.add(e.getData().toString());
+    params.add(e.getLuogo());
+    params.add(e.getLocalità());
+    params.add(e.getPrezzo());
+    params.add(e.getNumeroBiglietti());
+    
+    if(e.getDescrizione()==null)
+    	params.add("");
+    else {
+    	params.add(e.getDescrizione());
+    }
+    params.add(e.getLinkImmagine());
+    params.add(e.getTipologia());
+    params.add(e.getId());
+    System.out.println(e.getId());
+    try {
+        Database.getInstance().execQuery(query, params);
+    } catch (SQLException ex) {
+        System.err.println(ex.getMessage());
+        return false;
+    }
+    return true;
+}
+
 
 }
 

@@ -74,5 +74,17 @@ public class MainMenuController {
 			SelezionaEventoController.start(1);
 		}
 	}
+	
+	/*Questa classe interna gestisce il funzionamento del tasto Elimina evento*/
+	public class EliminaEventoListener implements ActionListener {
+		
+		public EliminaEventoListener () {
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			setInvisible();
+			SelezionaEventoController.start(2);
+		}
+	}
 
 }

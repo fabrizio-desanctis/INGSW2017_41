@@ -17,6 +17,12 @@ import models.dao.concrete.oracle.EventoOracleDAO;
 import models.dao.interfaces.EventoDAO;
 import views.SelezionaEventoWindow;
 
+
+/**
+*
+* @author Fabrizio De Sanctis
+*/
+
 public class SelezionaEventoController {
 	private static JFrame myFrame;
 	private static int scelta;
@@ -150,7 +156,132 @@ public class SelezionaEventoController {
 			setInvisible();
 			MainMenuController.setVisible();
 			}
+		}
+		
 	}
+	
+	public class ConfermaListener implements ActionListener {
+		private JTable table;
+		
+		public ConfermaListener(JTable table) {
+			this.table=table;
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			if(scelta==2) {
+				EliminaEvento();
+			}
+			else if(scelta==1) {
+				ModificaEvento();
+			}
+		}
+		
+		
+		public void EliminaEvento() {
+			int row = table.getSelectedRow();
+			String valueOne=null;
+			String valueTwo=null;
+			if(table.getRowCount() != 0) {
+				valueOne = table.getModel().getValueAt(row,0).toString();
+				valueTwo = table.getModel().getValueAt(row,1).toString();
+			}
+			
+			boolean found = false;
+			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			EventoDAO e = new EventoOracleDAO();
+			LinkedList<Evento> list=null;
+			try {
+				list = e.getListaEventi();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			String dateFormat=null; 
+			Evento eventoScelto=null;
+			if (valueOne != null && list!= null && list.size() != 0) {
+				for(Evento x : list) {
+					dateFormat = dataFormat.format(x.getData());
+					if(valueOne.equals(x.getNome()) && valueTwo.equals(dateFormat)){
+						found=true;
+						eventoScelto=x;
+						break;
+					}
+				}
+					
+			}
+			int dialogResult=1;
+			if(found) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				dialogResult = JOptionPane.showConfirmDialog(myFrame, "L'evento selezionato sarà eliminato.\n Confermi?\n", "Conferma", dialogButton);
+			}
+			else {
+				JOptionPane.showMessageDialog(myFrame,"Nessun evento selezionato. Impossibile continuare.\n Si prega di selezionare un evento e riprovare.\n" , "Errore/i", JOptionPane.ERROR_MESSAGE);
+			}
+			if(dialogResult == 0) {
+				if(e.deleteEvento(eventoScelto)) {
+					JOptionPane.showMessageDialog(myFrame,"L'evento selezionato è stato correttamente eliminato.\n" , "Evento eliminato",JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(myFrame,"L'evento selezionato non è stato eliminato.\n" , "Errore", JOptionPane.ERROR_MESSAGE);
+				}
+			setInvisible();
+			MainMenuController.setVisible();
+			}
+		}
+		
+		
+		public void ModificaEvento() {
+			int row = table.getSelectedRow();
+			String valueOne=null;
+			String valueTwo=null;
+			if(table.getRowCount() != 0) {
+				valueOne = table.getModel().getValueAt(row,0).toString();
+				valueTwo = table.getModel().getValueAt(row,1).toString();
+			}
+			
+			boolean found = false;
+			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			EventoDAO e = new EventoOracleDAO();
+			LinkedList<Evento> list=null;
+			try {
+				list = e.getListaEventi();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			String dateFormat=null; 
+			Evento eventoScelto=null;
+			if (valueOne != null && list!= null && list.size() != 0) {
+				for(Evento x : list) {
+					dateFormat = dataFormat.format(x.getData());
+					if(valueOne.equals(x.getNome()) && valueTwo.equals(dateFormat)){
+						found=true;
+						eventoScelto=x;
+						break;
+					}
+				}
+					
+			}
+			int dialogResult=1;
+			if(found) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				dialogResult = JOptionPane.showConfirmDialog(myFrame, "Sei sicuro di voler modificare questo evento?\n", "Conferma", dialogButton);
+			}
+			else {
+				JOptionPane.showMessageDialog(myFrame,"Nessun evento selezionato. Impossibile continuare.\n Si prega di selezionare un evento e riprovare.\n" , "Errore/i", JOptionPane.ERROR_MESSAGE);
+			}
+			if(dialogResult == 0) {
+					setInvisible();
+					ModificaEventoController.start(eventoScelto);
+				
+				
+			
+			}
+		}
 	}
 }
 	

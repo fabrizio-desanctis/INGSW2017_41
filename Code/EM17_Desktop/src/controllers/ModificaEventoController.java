@@ -19,29 +19,53 @@ import com.toedter.calendar.JDateChooser;
 import models.Evento;
 import models.dao.concrete.oracle.EventoOracleDAO;
 import models.dao.interfaces.EventoDAO;
-import views.InserisciEventoWindow;
+import views.ModificaEventoWindow;
 
 /**
 *
 * @author Fabrizio De Sanctis
 */
 
-public class InserisciEventoController {
+public class ModificaEventoController {
 private static JFrame myFrame;
+private static Evento myEvento;
 	
-	public static void start() {
+	public static void start(Evento e) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InserisciEventoWindow window = new InserisciEventoWindow();
+					myEvento=e;
+					ModificaEventoWindow window = new ModificaEventoWindow();
 					myFrame=window.getJFrame();
 					myFrame.setLocationRelativeTo(null);
+					
 					window.getJFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	@SuppressWarnings({ "rawtypes", "deprecation" })
+	public void caricaInfoEvento (JTextField nomeEvento,JTextField luogo,JTextField eur,JTextField cent,
+				JTextField nrBiglietti,JComboBox tipologia,JComboBox hour,JComboBox minute,JComboBox localita,JDateChooser date,
+				JTextArea descrizione,JTextField linkImmagine) {
+		nomeEvento.setText(myEvento.getNome());
+		luogo.setText(myEvento.getLuogo());
+		nrBiglietti.setText(String.valueOf(myEvento.getNumeroBiglietti()));
+		tipologia.setSelectedItem(myEvento.getTipologia());
+		localita.setSelectedItem(myEvento.getLocalità());
+		descrizione.setText(myEvento.getDescrizione());
+		linkImmagine.setText(myEvento.getLinkImmagine());
+		float prezzo = myEvento.getPrezzo();
+		int prezzoInt = (int)prezzo;
+		eur.setText(String.valueOf(prezzoInt));
+		int ora = myEvento.getData().getHours();
+		hour.setSelectedItem(String.valueOf(ora));
+		int min = myEvento.getData().getMinutes();
+		minute.setSelectedItem(String.valueOf(min));
+		date.setDate(myEvento.getData());
 	}
 	
 	public static void setInvisible () {
@@ -183,11 +207,10 @@ private static JFrame myFrame;
 		      }
 		    }
 		    if ((getLength() + str.length()) <= limit) {
-		    	super.insertString(offset, str, attr);
+		    super.insertString(offset, str, attr);
 		    }
 		  }
 		}
-	
 	
 	/*Questa classe interna si occupa di impostare un limite di caratteri per un campo di testo*/
 	public class JTextFieldLimit extends PlainDocument {
@@ -258,7 +281,7 @@ private static JFrame myFrame;
 		@SuppressWarnings("deprecation")
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Evento myEvento = new Evento();
+			//Evento myEvento = new Evento();
 			String reportError=new String("Sono stati riportati i seguenti errori:\n");
 			boolean errori=false;
 			if(nomeEventoField.getText().length()==0) {
@@ -300,7 +323,7 @@ private static JFrame myFrame;
 				myEvento.setData(date);
 				if(descrizioneTextArea.getText().length()>0)
 				myEvento.setDescrizione(descrizioneTextArea.getText());
-				//myEvento.setId(1);
+			//	myEvento.setId(1);
 				myEvento.setLinkImmagine(linkImmagineField.getText());
 				myEvento.setLocalità((String)localitaComboBox.getSelectedItem());
 				myEvento.setLuogo(luogoField.getText());
@@ -323,15 +346,15 @@ private static JFrame myFrame;
 				myMessage+= "\nConfermi?\n";
 				
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(myFrame, myMessage, "Conferma inserimento", dialogButton);
+				int dialogResult = JOptionPane.showConfirmDialog(myFrame, myMessage, "Conferma modifica", dialogButton);
 				if(dialogResult == 0) {
-					if(ed.createNewEvento(myEvento)) {
-						JOptionPane.showMessageDialog(myFrame,"Evento inserito correttamente.","Evento inserito", 1);
+					if(ed.updateEvento(myEvento)) {
+						JOptionPane.showMessageDialog(myFrame,"Evento modificato correttamente.","Evento modificato", 1);
 						setInvisible();
 						MainMenuController.setVisible();
 					}
 					else {
-					JOptionPane.showMessageDialog(myFrame,"Impossibile aggiungere evento.","Evento non inserito", 0);	
+					JOptionPane.showMessageDialog(myFrame,"Impossibile modificare evento.","Evento non modificato", 0);	
 					} 
 					
 				}

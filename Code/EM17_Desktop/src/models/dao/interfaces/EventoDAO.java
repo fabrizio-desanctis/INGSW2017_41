@@ -16,5 +16,7 @@ public interface EventoDAO {
 	public LinkedList<Evento> getListaEventi () throws ParseException;
 	public TreeSet<String> getListaLocalita();
 	public boolean createNewEvento(Evento e);
+	public boolean deleteEvento(Evento e);
+	public boolean updateEvento(Evento e);
 	
 }

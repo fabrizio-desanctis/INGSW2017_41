@@ -84,6 +84,8 @@ public class SelezionaEventoWindow {
 		//Listener per il tasto Annulla
 		SelezionaEventoController.AnnullaListener myAnnullaListener = controller.new AnnullaListener();
 		indietroButton.addActionListener(myAnnullaListener);
+		SelezionaEventoController.ConfermaListener myConfermaListener = controller.new ConfermaListener(table);
+		avantiButton.addActionListener(myConfermaListener);
 		
 	}
 	

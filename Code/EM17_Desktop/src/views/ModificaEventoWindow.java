@@ -6,7 +6,7 @@ import java.awt.Font;
 import java.util.Calendar;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
-import controllers.InserisciEventoController;
+import controllers.ModificaEventoController;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 * @author Fabrizio De Sanctis
 */
 
-public class InserisciEventoWindow {
+public class ModificaEventoWindow {
 
 	private JFrame frame;
 	private JTextField nomeEventoField;
@@ -38,7 +38,7 @@ public class InserisciEventoWindow {
 	/**
 	 * Create the application.
 	 */
-	public InserisciEventoWindow() {
+	public ModificaEventoWindow() {
 		initialize();
 	}
 
@@ -224,7 +224,7 @@ public class InserisciEventoWindow {
 		avantiButton.setBounds(382, 391, 162, 41);
 		frame.getContentPane().add(avantiButton);
 		
-		JLabel InfoLabel = new JLabel("Aggiungi nuovo evento");
+		JLabel InfoLabel = new JLabel("Modifica evento");
 		InfoLabel.setVerticalAlignment(SwingConstants.TOP);
 		InfoLabel.setFont(new Font("Arial Black", Font.PLAIN, 18));
 		InfoLabel.setBounds(184, 46, 276, 71);
@@ -272,26 +272,25 @@ public class InserisciEventoWindow {
 	    
 	    
 	    
-	    InserisciEventoController controller = new InserisciEventoController(); //Istanzia controller
-	    //Listener per il tasto Annulla
-		InserisciEventoController.AnnullaListener myAnnullaListener = controller.new AnnullaListener();
+	    ModificaEventoController controller = new ModificaEventoController(); //Istanzia controller
+	  //Listener per il tasto Annulla
+		ModificaEventoController.AnnullaListener myAnnullaListener = controller.new AnnullaListener();
 		indietroButton.addActionListener(myAnnullaListener);
 		//Limite caratteri per il campo prezzo (eur)
-		InserisciEventoController.JTextFieldFilter myFilterEur = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,8);
+		ModificaEventoController.JTextFieldFilter myFilterEur = controller.new JTextFieldFilter(ModificaEventoController.JTextFieldFilter.NUMERIC,8);
 	    myFilterEur.setNegativeAccepted(false);
 	    eurField.setDocument(myFilterEur);
 	    //Limite caratteri per il campo prezzo (cent)
-	    InserisciEventoController.JTextFieldFilter myFilterCent = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,2);
+	    ModificaEventoController.JTextFieldFilter myFilterCent = controller.new JTextFieldFilter(ModificaEventoController.JTextFieldFilter.NUMERIC,2);
 	    myFilterCent.setNegativeAccepted(false);
 	    centField.setDocument(myFilterCent);
 	    //Limite caratteri per il campo numero biglietti
-	    InserisciEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(InserisciEventoController.JTextFieldFilter.NUMERIC,10);
+	    ModificaEventoController.JTextFieldFilter myFilterBiglietti = controller.new JTextFieldFilter(ModificaEventoController.JTextFieldFilter.NUMERIC,10);
 	    myFilterBiglietti.setNegativeAccepted(false);
 	    nrBigliettiField.setDocument(myFilterBiglietti);
 	    //Aggiungi item alla combobox per le localita.
-	    InserisciEventoController.addItemToComboBox(localitaComboBox);
-	    //Listener per il tasto Conferma
-	    InserisciEventoController.ConfermaListener myConferma = controller.new ConfermaListener(nomeEventoField,luogoField,eurField,centField,
+	    ModificaEventoController.addItemToComboBox(localitaComboBox);
+	    ModificaEventoController.ConfermaListener myConferma = controller.new ConfermaListener(nomeEventoField,luogoField,eurField,centField,
 		  		nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea,linkImmagineField);
 	    avantiButton.addActionListener(myConferma);
 	    //Limite caratteri per i campi di testo.
@@ -302,8 +301,10 @@ public class InserisciEventoWindow {
 	    linkImmagineField.setDocument(controller.new JTextFieldLimit(100));
 	    //Listener sul frame per gestirne la chiusura
 	    frame.addWindowListener(controller.new MyWindowListener());
-	  
-	  		
+	  //Listener per il tasto Conferma
+	    controller.caricaInfoEvento(nomeEventoField,luogoField,eurField,centField,
+		  		nrBigliettiField,tipologiaComboBox,hourComboBox,minuteComboBox,localitaComboBox,dateChooser,descrizioneTextArea,linkImmagineField);
+	    
 	   
 	    
 	}
