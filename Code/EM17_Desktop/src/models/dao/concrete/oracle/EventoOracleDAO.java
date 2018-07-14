@@ -16,7 +16,7 @@ public class EventoOracleDAO implements EventoDAO{
 	
 @Override
 public LinkedList<Evento> getListaEventi () throws ParseException {
-	String query = "select * from Evento order by id " ;
+	String query = "select * from Evento where (select count(*) from Biglietto where id_evento = id) = 0  order by id " ;
 	ArrayList<Object> params = null;
 	LinkedList<Evento> list = new LinkedList<Evento>();
 	Date today = new Date(System.currentTimeMillis());
@@ -127,7 +127,6 @@ public boolean updateEvento(Evento e){
     params.add(e.getLinkImmagine());
     params.add(e.getTipologia());
     params.add(e.getId());
-    System.out.println(e.getId());
     try {
         Database.getInstance().execQuery(query, params);
     } catch (SQLException ex) {

@@ -59,8 +59,31 @@ private static Evento myEvento;
 		descrizione.setText(myEvento.getDescrizione());
 		linkImmagine.setText(myEvento.getLinkImmagine());
 		float prezzo = myEvento.getPrezzo();
+		String prezzoString = String.valueOf(prezzo);
+		char[] prezzoCharacter = new char[10];
+			for(int j=0;j<10;j++)
+				prezzoCharacter[j]='n';
+		
+		for(int y=0;y<prezzoString.length();y++)
+			prezzoCharacter[y] = prezzoString.charAt(y);
+		
+		int i=0;
+			for(i=0;i<prezzoCharacter.length;i++)
+				if(prezzoCharacter[i]=='.')
+					break;
+		String centesimi=null;
+			if(prezzoCharacter[i+1]!='n') {
+				centesimi = Character.toString(prezzoCharacter[i+1]);
+				if(prezzoCharacter[i+2] != 'n')
+					centesimi= centesimi + Character.toString(prezzoCharacter[i+2]);
+			}
 		int prezzoInt = (int)prezzo;
 		eur.setText(String.valueOf(prezzoInt));
+		if(centesimi != null)
+			cent.setText(centesimi);
+		else {
+			cent.setText("00");
+		}
 		int ora = myEvento.getData().getHours();
 		hour.setSelectedItem(String.valueOf(ora));
 		int min = myEvento.getData().getMinutes();
@@ -323,7 +346,6 @@ private static Evento myEvento;
 				myEvento.setData(date);
 				if(descrizioneTextArea.getText().length()>0)
 				myEvento.setDescrizione(descrizioneTextArea.getText());
-			//	myEvento.setId(1);
 				myEvento.setLinkImmagine(linkImmagineField.getText());
 				myEvento.setLocalità((String)localitaComboBox.getSelectedItem());
 				myEvento.setLuogo(luogoField.getText());
