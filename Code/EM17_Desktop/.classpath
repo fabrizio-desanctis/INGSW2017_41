@@ -5,7 +5,5 @@
 	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="ojdbc6.jar"/>
 	<classpathentry kind="lib" path="logout.jar"/>
-	<classpathentry kind="lib" path="jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

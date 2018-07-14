@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -70,13 +71,19 @@ public class SelezionaEventoController {
 
 		@Override
 		public void windowClosing(WindowEvent e) {
-			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog(myFrame, "Le modifiche verranno annullate.\n Confermi?\n", "Annulla", dialogButton);
-			if(dialogResult == 0) {
-			setInvisible();
-			MainMenuController.setVisible();
+			if(scelta==2) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(myFrame, "Le modifiche verranno annullate.\n Confermi?\n", "Annulla", dialogButton);
+				if(dialogResult == 0) {
+				setInvisible();
+				MainMenuController.setVisible();
+				}
 			}
-			
+				else {
+					setInvisible();
+					MainMenuController.setVisible();
+				}
+				
 		}
 
 		@Override
@@ -108,9 +115,14 @@ public class SelezionaEventoController {
 	/*Questa procedura carica tutte le righe nella tabella*/
 	public void getTable (JTable table) throws ParseException {
 		String[] colName = { "NOME EVENTO", "DATA"};
-
+		LinkedList<Evento> list= null;
 		EventoDAO e = new EventoOracleDAO();
-		LinkedList<Evento> list = e.getListaEventi();
+		if(scelta != 3) {
+		list = e.getListaEventi();
+		}
+		else {
+			list = e.getAllEventi();
+		}
 		Object[][] object = null;
 		
 		
@@ -150,15 +162,22 @@ public class SelezionaEventoController {
 		}
 		
 		public void actionPerformed(ActionEvent arg0) {
-			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog(myFrame, "Le modifiche verranno annullate.\n Confermi?\n", "Annulla", dialogButton);
-			if(dialogResult == 0) {
-			setInvisible();
-			MainMenuController.setVisible();
+			if(scelta==2) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(myFrame, "Le modifiche verranno annullate.\n Confermi?\n", "Annulla", dialogButton);
+				if(dialogResult == 0) {
+				setInvisible();
+				MainMenuController.setVisible();
+				}
+			}
+				else {
+					setInvisible();
+					MainMenuController.setVisible();
+				}
 			}
 		}
 		
-	}
+	
 	
 	public class ConfermaListener implements ActionListener {
 		private JTable table;
@@ -173,6 +192,9 @@ public class SelezionaEventoController {
 			}
 			else if(scelta==1) {
 				ModificaEvento();
+			}
+			else if(scelta==3) {
+				StatisticheEvento();
 			}
 		}
 		
@@ -277,6 +299,63 @@ public class SelezionaEventoController {
 			if(dialogResult == 0) {
 					setInvisible();
 					ModificaEventoController.start(eventoScelto);
+				
+				
+			
+			}
+		}
+		
+		
+		public void StatisticheEvento() {
+			int row = table.getSelectedRow();
+			String valueOne=null;
+			String valueTwo=null;
+			if(table.getRowCount() != 0) {
+				valueOne = table.getModel().getValueAt(row,0).toString();
+				valueTwo = table.getModel().getValueAt(row,1).toString();
+			}
+			
+			boolean found = false;
+			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			EventoDAO e = new EventoOracleDAO();
+			LinkedList<Evento> list=null;
+			try {
+				list = e.getAllEventi();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			String dateFormat=null; 
+			Evento eventoScelto=null;
+			if (valueOne != null && list!= null && list.size() != 0) {
+				for(Evento x : list) {
+					dateFormat = dataFormat.format(x.getData());
+					if(valueOne.equals(x.getNome()) && valueTwo.equals(dateFormat)){
+						found=true;
+						eventoScelto=x;
+						break;
+					}
+				}
+					
+			}
+			
+			
+			
+			int dialogResult=1;
+			if(found) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				dialogResult = JOptionPane.showConfirmDialog(myFrame, "Sei sicuro di voler visualizzare le statistiche per questo evento?\n", "Conferma", dialogButton);
+			}
+			else {
+				JOptionPane.showMessageDialog(myFrame,"Nessun evento selezionato. Impossibile continuare.\n Si prega di selezionare un evento e riprovare.\n" , "Errore/i", JOptionPane.ERROR_MESSAGE);
+			}
+			if(dialogResult == 0) {
+					setInvisible();
+					ArrayList<Object> params = null;
+					params = e.getInfoEventi(eventoScelto);
+					VisualizzaStatisticheController.start(params);
 				
 				
 			

@@ -86,5 +86,17 @@ public class MainMenuController {
 			SelezionaEventoController.start(2);
 		}
 	}
+	
+	/*Questa classe interna gestisce il funzionamento del tasto Visualizza statistiche evento*/
+	public class StatisticheListener implements ActionListener {
+		
+		public StatisticheListener () {
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			setInvisible();
+			SelezionaEventoController.start(3);
+		}
+	}
 
 }

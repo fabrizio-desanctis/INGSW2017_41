@@ -84,6 +84,8 @@ public class MainMenuWindows {
 		modificaEventoButton.addActionListener(myModificaListener);
 		MainMenuController.EliminaEventoListener myEliminaListener = controller.new EliminaEventoListener();
 		eliminaEventoButton.addActionListener(myEliminaListener);
+		MainMenuController.StatisticheListener myStatListener = controller.new StatisticheListener();
+		visualizzaStatisticheButton.addActionListener(myStatListener);
 	}
 	
 	public JFrame getJFrame() {
