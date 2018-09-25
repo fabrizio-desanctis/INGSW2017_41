@@ -22,11 +22,11 @@ public class Database {
     private OracleDataSource ods;
     private final LinkedBlockingQueue<Connection> freeConnections;
     private static final int MAXCONNECTIONS = 5;
-    private String host = "127.0.0.1";
-    private String service = "xe";
+    private String host = "em17db.cwnczowvs2cx.eu-west-2.rds.amazonaws.com";
+    private String service = "ORCL";
     private int port = 1521;
     private String user = "fabrizio";
-    private String password = "230495";
+    private String password = "23041995";
     private Connection conn;
     private final int connections; //total number of connections.
     
