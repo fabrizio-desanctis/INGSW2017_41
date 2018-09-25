@@ -23,7 +23,7 @@ public class Database {
     private final LinkedBlockingQueue<Connection> freeConnections;
     private static final int MAXCONNECTIONS = 5;
     private String host = "em17db.cwnczowvs2cx.eu-west-2.rds.amazonaws.com";
-    private String service = "ORC";
+    private String service = "ORCL";
     private int port = 1521;
     private String user = "fabrizio";
     private String password = "23041995";
