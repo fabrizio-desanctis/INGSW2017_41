@@ -74,7 +74,7 @@ public class InserisciEventoWindow {
 		frame.getContentPane().add(tipologiaLabel);
 		
 		JComboBox tipologiaComboBox = new JComboBox();
-		tipologiaComboBox.setModel(new DefaultComboBoxModel(new String[] {"Concerti", "Sport", "Museo", "Teatro", "Eventi", "Cinema"}));
+		tipologiaComboBox.setModel(new DefaultComboBoxModel(new String[] {"Concerti", "Sport", "Spettacolo", "Cultura"}));
 		tipologiaComboBox.setFont(new Font("Arial", Font.BOLD, 11));
 		tipologiaComboBox.setBounds(135, 94, 113, 20);
 		frame.getContentPane().add(tipologiaComboBox);

@@ -22,7 +22,7 @@ public class Database {
     private OracleDataSource ods;
     private final LinkedBlockingQueue<Connection> freeConnections;
     private static final int MAXCONNECTIONS = 5;
-    private String host = "em17db.cwnczowvs2cx.eu-west-2.rds.amazonaws.com";
+    private String host = "em17.clxk8xciqyvy.us-east-1.rds.amazonaws.com";
     private String service = "ORCL";
     private int port = 1521;
     private String user = "fabrizio";

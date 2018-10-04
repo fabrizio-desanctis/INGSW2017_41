@@ -21,6 +21,10 @@ public interface EventoDAO {
 	public boolean createNewEvento(Evento e);
 	public boolean deleteEvento(Evento e);
 	public ArrayList<Evento> getEventiSport () throws ParseException;
+	public ArrayList<Evento> getEventiSpettacolo () throws ParseException;
+	public ArrayList<Evento> getEventiConcerti () throws ParseException;
+	public ArrayList<Evento> getEventiCultura () throws ParseException;
+	public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseException;
 	public boolean updateEvento(Evento e);
 	
 }

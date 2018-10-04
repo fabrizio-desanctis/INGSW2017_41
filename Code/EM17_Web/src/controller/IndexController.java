@@ -1,10 +1,11 @@
 package controller;
 
+
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ import models.dao.interfaces.EventoDAO;
 /**
  * Servlet implementation class IndexController
  */
-@WebServlet(urlPatterns = "/SearchEvent.do")
+@WebServlet(urlPatterns = "/SearchEvent2")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -40,30 +41,137 @@ public class IndexController extends HttpServlet {
     }
     
     
-    public ArrayList<Evento> getEventiSport () throws ParseException {
+    public LinkedList<Evento> getEventi () throws ParseException {
     	EventoDAO e = new EventoOracleDAO();
-    	ArrayList<Evento> list = new ArrayList<Evento>();
-    	ArrayList<Evento> returned = new ArrayList<Evento>();
-    	list = e.getEventiSport();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getListaEventi();
     	int i=0;
     	for (Evento x: list) {
-    		if(i<2)
+    		if(i<5) {
     			returned.add(x);
+    			
+    			
+    		}
+    			
     		i++;
     	}
     	return returned;
     }
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("useradd.jsp");
-		request.getParameter("tipologia");
-		System.out.println(request.getParameter("tipologia"));
-		System.out.println(request.getParameter("località"));
-		System.out.println(request.getParameter("cerca"));
-		view.forward(request, response);
-	}
-
+    
+    public static LinkedList<Evento> getSport () throws ParseException {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getEventiSport();
+    	
+    	for (Evento x: list) 
+    		returned.add(x);
+    			
+    	return returned;
+    }
+    
+    public static LinkedList<Evento> getSpettacolo () throws ParseException {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getEventiSpettacolo();
+    	
+    	for (Evento x: list) 
+    			returned.add(x);
+    			
+      	return returned;
+    }
+    
+    public static LinkedList<Evento> getCultura () throws ParseException {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getEventiCultura();
+    	
+    	for (Evento x: list) 
+    			returned.add(x);
+    	
+    	return returned;
+    }
+	
+    public static LinkedList<Evento> getConcerti () throws ParseException {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getEventiConcerti();
+    
+    	for (Evento x: list) 
+    			returned.add(x);
+    
+    	return returned;
+    }
+    
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+    		throws ServletException, IOException  {
+    		List<Evento> list = new LinkedList<Evento>();
+    		RequestDispatcher view;
+    		if(req.getParameter("param").toString().equals("Sport")) {
+    			try {
+    				list = IndexController.getSport();
+				} catch (ParseException e1) {
+					}
+    		}
+    		
+    		else if(req.getParameter("param").toString().equals("Spettacolo")) {
+    			try {
+    				list = IndexController.getSpettacolo();
+				} catch (ParseException e1) {
+					}
+    		}
+    		
+    		else if(req.getParameter("param").toString().equals("Cultura")) {
+    			try {
+    				list = IndexController.getCultura();
+				} catch (ParseException e1) {
+					}
+    		}
+    		
+    		else if(req.getParameter("param").toString().equals("Concerti")) {
+    			try {
+    				list = IndexController.getConcerti();
+				} catch (ParseException e1) {
+					}
+    		}
+    		
+    		req.setAttribute("eventi", list);	
+			if(list.size()==0) {
+				view = req.getRequestDispatcher("search-failed.jsp");  // ..e lo inviamo alla JSP
+			}
+			else {
+				view = req.getRequestDispatcher("search.jsp");  // ..e lo inviamo alla JSP
+			}
+		view.forward(req, res);
+    		
+    		
+    		
+    }
+    
+    
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    		throws ServletException, IOException  {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+		RequestDispatcher view;
+			try {
+				list = e.getEventiFromSearch(req.getParameter("cerca").toString());
+			} catch (ParseException e1) {
+			}
+		
+		req.setAttribute("eventi", list);	
+		if(list.size()==0) {
+			view = req.getRequestDispatcher("search-failed.jsp");  // ..e lo inviamo alla JSP
+		}
+		else {
+			view = req.getRequestDispatcher("search.jsp");  // ..e lo inviamo alla JSP
+		}
+	view.forward(req, res);
+		
+    }
+    
 }
