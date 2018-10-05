@@ -5,15 +5,14 @@
     import="java.util.List"
     import="java.util.LinkedList"
     import="java.text.SimpleDateFormat"
-	import="java.util.Date" %>
-
+	import="java.util.Date"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventi - EM '17</title>
+    <title>Product - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -27,7 +26,7 @@
             <div
                 class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Spettacolo">SPETTACOLO</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Sport">SPORT</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
@@ -40,47 +39,33 @@
         </div>
         </div>
     </nav>
-    <main class="page search page">
-        <section>
-            <form method="POST" action="SearchEvent2" class="search-form" style="margin:14px;">
-                <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div><input name=cerca class="form-control" type="text" placeholder="Cosa stai cercando?">
-                    <div class="input-group-append"><button class="btn btn-primary" type="submit" style="background-color:rgb(59,153,224);">CERCA</button></div>
-                </div>
-            </form>
-        </section>
-        <section class="clean-block clean-cart dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Ricerca</h2>
-                </div>
-                <div class="content">
-                    <div class="row no-gutters">
-                        <div class="col-md-12 col-lg-8">
-                            <div class="items">
-                                <div class="product">
-                                	<% List <Evento> list= new LinkedList <Evento>();
+    <main class="page product-page">
+    	<% List <Evento> list= new LinkedList <Evento>();
                                 		list = (List<Evento>) request.getAttribute("eventi"); %>
-                                		<% for( Evento e : list) { %>
+                                		<% Evento e = list.get(0); %>
                                 		<% SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         				String dateFormat = dataFormat.format(e.getData()); %>
-                                    <div class="row justify-content-center align-items-center">
-                                        <div class="col-md-3">
-                                            <div class="product-image"><img class="img-fluid d-block mx-auto image" src="<% out.print(e.getLinkImmagine());%>"></div>
-                                        </div>
-                                        <div class="col-md-5 product-info">
-                                            <div class="row">
-                                                <div class="col"><a href="SearchEvent2?param=<%out.print(e.getId());%>" style="font-size:20px;"><strong><% out.print(e.getNome());%></strong></a></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col"><label class="col-form-label"><strong>Data:&nbsp;</strong><span><% out.print(dateFormat);%></span></label></div>
-                                            </div>
-                                        </div>
-                                       
+        <section class="clean-block clean-product dark">
+            <div class="container">
+                <div class="block-content">
+                    <div class="product-info">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="gallery" style="background-color:rgb(255,255,255);">
+                                    <div class="sp-wrap"><img class="img-fluid d-block mx-auto" src="<% out.print(e.getLinkImmagine()); %>"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info">
+                                
+                                    <h3><% out.print(e.getNome()); %></h3>
+                                    <div class="summary"><label><strong>DESCRIZIONE EVENTO</strong></label>
+                                        <p><% out.print(dateFormat); %></p>
+                                        <p><% out.print(e.getDescrizione()); %></p>
                                     </div>
-                                    <hr>
-                                    <hr>
-                                    <%  } %>
+                                    <div class="form-group">
+                                        <div class="price"><label><strong>Prezzo biglietto:&nbsp;</strong></label>
+                                            <h3 style="color:rgb(255,0,0);">EUR <% out.print(e.getPrezzo()); %></h3><label><strong>Quantità</strong>:&nbsp;</label><input type="number" value="1" min="1" max="10" step="1" style="width:45px;"></div><button class="btn btn-primary" type="button"><i class="icon-basket"></i>Aggiungi al carrello</button></div>
                                 </div>
                             </div>
                         </div>
@@ -127,17 +112,9 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>Â© 2018 Copyright Text</p>
+            <p>© 2018 Copyright Text</p>
         </div>
     </footer>
-    <section class="clean-block features" style="margin:0px;padding:0px;">
-        <form class="search-form" style="margin:14px;">
-            <div class="input-group">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div><input class="form-control" type="text" placeholder="Cosa stai cercando?">
-                <div class="input-group-append"><button class="btn btn-primary" type="button" style="background-color:rgb(59,153,224);">CERCA</button></div>
-            </div>
-        </form>
-    </section>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/theme.js"></script>

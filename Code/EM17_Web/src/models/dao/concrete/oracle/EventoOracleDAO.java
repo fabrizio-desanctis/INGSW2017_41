@@ -129,6 +129,30 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 	return list;
 }
 
+
+@Override
+public ArrayList<Evento> getEventibyID (String search ) throws ParseException {
+	String query = "select * from Evento where id="+search;
+	ArrayList<Object> params = null;
+	ArrayList<Evento> list = new ArrayList<>();
+
+	
+	try {
+		ResultSet rs = Database.getInstance().execQuery(query, params);
+		if(rs!= null){
+			while(rs.next()){
+					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
+					Date bbDate;
+					bbDate = sdf.parse(rs.getString("DATA"));
+					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					list.add(x);	
+			}
+		}
+	} catch (SQLException ex) { list=null;
+	}
+	return list;
+}
+
 @Override
 public ArrayList<Evento> getEventiSport () throws ParseException {
 	String query = "select * from Evento where tipologia like 'Sport'";

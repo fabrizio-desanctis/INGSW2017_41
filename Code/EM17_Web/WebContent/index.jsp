@@ -72,17 +72,17 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center"><img class="img-fluid card-img-top w-100 d-block" src="<% out.print(e1.getLinkImmagine()); %>">
-                            <div class="card-body info"><a class="card-link" href="http://www.sito.ext/pagina.html"><strong><% out.print(e1.getNome()); %></strong><br></a></div>
+                            <div class="card-body info"><a class="card-link" href="SearchEvent2?param=<%out.print(e1.getId());%>"><strong><% out.print(e1.getNome()); %></strong><br></a></div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center"><img class="img-fluid card-img-top w-100 d-block" src="<% out.print(e2.getLinkImmagine()); %>">
-                            <div class="card-body info"><a class="card-link" href="http://www.instagram.com/"><strong><% out.print(e2.getNome()); %></strong><br></a></div>
+                            <div class="card-body info"><a class="card-link" href="SearchEvent2?param=<%out.print(e2.getId());%>"><strong><% out.print(e2.getNome()); %></strong><br></a></div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center"><img class="img-fluid card-img-top w-100 d-block" src="<% out.print(e3.getLinkImmagine()); %>">
-                            <div class="card-body info"><a class="card-link" href="http://www.twitter.com/"><strong><% out.print(e3.getNome()); %></strong><br></a></div>
+                            <div class="card-body info"><a class="card-link" href="SearchEvent2?param=<%out.print(e3.getId());%>"><strong><% out.print(e3.getNome()); %></strong><br></a></div>
                         </div>
                     </div>
                 </div>
@@ -92,12 +92,12 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center"><img class="img-fluid card-img-top w-100 d-block" src="<% out.print(e4.getLinkImmagine()); %>">
-                            <div class="card-body info"><a class="card-link" href="http://www.sito.ext/pagina.html"><strong><% out.print(e4.getNome()); %></strong><br></a></div>
+                            <div class="card-body info"><a class="card-link" href="SearchEvent2?param=<%out.print(e4.getId());%>"><strong><% out.print(e4.getNome()); %></strong><br></a></div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center"><img class="img-fluid card-img-top w-100 d-block" src="<% out.print(e5.getLinkImmagine()); %>">
-                            <div class="card-body info"><a class="card-link" href="http://www.twitter.com/"><strong><% out.print(e5.getNome()); %></strong><br></a></div>
+                            <div class="card-body info"><a class="card-link" href="SearchEvent2?param=<%out.print(e5.getId());%>"><strong><% out.print(e5.getNome()); %></strong><br></a></div>
                         </div>
                     </div>
                 </div>

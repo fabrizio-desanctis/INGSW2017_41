@@ -1,6 +1,6 @@
 package controller;
 
-//wewe 
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedList;
@@ -107,10 +107,23 @@ public class IndexController extends HttpServlet {
     	return returned;
     }
     
+    public static LinkedList<Evento> getEventoByID (String search) throws ParseException {
+    	EventoDAO e = new EventoOracleDAO();
+    	List<Evento> list = new LinkedList<Evento>();
+    	LinkedList<Evento> returned = new LinkedList<Evento>();
+    	list = e.getEventibyID(search);
+    
+    	for (Evento x: list) 
+    			returned.add(x);
+    
+    	return returned;
+    }
+    
     public void doGet(HttpServletRequest req, HttpServletResponse res)
     		throws ServletException, IOException  {
     		List<Evento> list = new LinkedList<Evento>();
     		RequestDispatcher view;
+    		boolean productPage = false;
     		if(req.getParameter("param").toString().equals("Sport")) {
     			try {
     				list = IndexController.getSport();
@@ -139,8 +152,19 @@ public class IndexController extends HttpServlet {
 					}
     		}
     		
+    		else {
+    			try {
+    				productPage=true;
+    				list = IndexController.getEventoByID(req.getParameter("param"));
+    			} catch (ParseException e1) {
+    				
+    			}
+    		}
+    		
     		req.setAttribute("eventi", list);	
-			if(list.size()==0) {
+    		if(productPage == true)
+    			view = req.getRequestDispatcher("product-page.jsp");
+    		else if(list.size()==0) {
 				view = req.getRequestDispatcher("search-failed.jsp");  // ..e lo inviamo alla JSP
 			}
 			else {
