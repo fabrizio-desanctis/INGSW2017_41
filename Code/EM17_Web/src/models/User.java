@@ -24,6 +24,15 @@ public class User {
 		this.dataNascita=dt;
 		this.sesso=sex;
 	}
+	
+	public User() {
+		
+	}
+	
+	public User(String email,String password) {
+		this.email=email;
+		this.password=password;
+	}
 
 	public int getId() {
 		return id;

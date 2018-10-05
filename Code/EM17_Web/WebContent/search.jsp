@@ -5,7 +5,8 @@
     import="java.util.List"
     import="java.util.LinkedList"
     import="java.text.SimpleDateFormat"
-	import="java.util.Date" %>
+	import="java.util.Date"
+	import="controller.LoginController" %>
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,11 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
+                	<%LoginController logController = new LoginController(); %>
+                    <% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="dati.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>

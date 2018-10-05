@@ -4,6 +4,7 @@
     import="models.Evento"
     import="java.util.List"
     import="java.util.LinkedList"
+    import="controller.LoginController"
      %>
 <!DOCTYPE html>
 <html>
@@ -21,6 +22,7 @@
 
 <body>
 	<% IndexController controller = new IndexController(); %>
+	<% LoginController logController = new LoginController(); %>
     <nav class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
         <div class="container"><a class="navbar-brand logo" href="index.jsp" style="font-size:54px;padding:0px;margin:-16px;"><strong>EM'17</strong></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
@@ -32,7 +34,10 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
+                <% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="dati.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>

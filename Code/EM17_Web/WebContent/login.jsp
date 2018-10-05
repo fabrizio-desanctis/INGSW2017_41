@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
-    import="controller.LoginController"%>
+    import="controller.IndexController"
+    import="models.Evento"
+    import="java.util.List"
+    import="java.util.LinkedList"
+    import="controller.LoginController"
+    import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricerca fallita - EM '17</title>
+    <title>Login - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -16,56 +21,48 @@
 </head>
 
 <body>
+	<% LoginController logController = new LoginController();
+	    ArrayList<Integer> error = new ArrayList<Integer>(2);%>
+	<% error = (ArrayList<Integer>) request.getAttribute("errore"); %>
     <nav class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
         <div class="container"><a class="navbar-brand logo" href="index.jsp" style="font-size:54px;padding:0px;margin:-16px;"><strong>EM'17</strong></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
                 class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Spettacolo">SPETTACOLO</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Sport">SPORT</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                	<%LoginController logController= new LoginController(); %>
-                   <% if(logController.getAutenticato()==false) { %>
+                    <% if(logController.getAutenticato()==false) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="dati.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
         </div>
     </nav>
-    <main class="page search-failed page">
-        <section>
-            <form method="POST" action="SearchEvent2" class="search-form" style="margin:14px;">
-                <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div><input name=cerca class="form-control" type="text" placeholder="Cosa stai cercando?">
-                    <div class="input-group-append"><button class="btn btn-primary" type="submit" style="background-color:rgb(59,153,224);">CERCA</button></div>
-                </div>
-            </form>
-        </section>
-        <section class="clean-block clean-cart dark">
+    <main class="page login-page">
+        <section class="clean-block clean-form dark">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Ricerca evento</h2>
+                    <h2 class="text-info">Accedi alla tua area personale</h2>
+                    <p>Effettua il log in per accedere alla tua area personale. Potrai aggiungere nuovi evento al carrello, scaricare i tuoi biglietti e molto altro ancora.</p>
                 </div>
-                <div class="content">
-                    <div class="row no-gutters">
-                        <div class="col-md-12 col-lg-8">
-                            <p><strong>La tua ricerca non ha prodotto alcun risultato.</strong></p>
-                            <p><strong>Qualche suggerimento: &nbsp; &nbsp;</strong><br></p>
-                            <ul>
-                                <li>Verifica se ci sono eventuali errori nella chiave di ricerca.</li>
-                                <li>Prova con un'altra chiave di ricerca.</li>
-                                <li>Prova con una chiave di ricerca meno specifica.</li>
-                            </ul>
-                            <p><strong>Buona fortuna e buon divertimento!</strong><br></p>
-                        </div>
-                    </div>
-                </div>
+                <form method="POST" action="Login">
+                    <div class="form-group"><label for="email">Indirizzo e-mail</label><input name="user" class="form-control item" type="text" id="email"></div>
+                 	
+                    <div class="form-group"><label for="password">Password</label><input name="password" class="form-control" type="password" id="password"></div><button class="btn btn-primary btn-block" type="submit">Log In</button><label style="margin:12px;">Non sei registrato?</label>
+                    
+                    <a href="registration.html">Clicca qui</a>
+                    <% if(error != null && error.get(0)==1) {  %>   
+                    <p style="color:red;">Password non corretta!</p> <% } %>
+                    <% if(error != null && error.get(1)==1) {  %>   
+                    <p style="color:red;">Utente non trovato!</p> <% } %>
+                </form>
             </div>
         </section>
     </main>
