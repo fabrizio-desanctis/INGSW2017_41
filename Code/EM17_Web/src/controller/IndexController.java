@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Evento;
+import models.User;
 import models.dao.concrete.oracle.EventoOracleDAO;
 import models.dao.interfaces.EventoDAO;
 
@@ -170,9 +171,8 @@ public class IndexController extends HttpServlet {
 			else {
 				view = req.getRequestDispatcher("search.jsp");  // ..e lo inviamo alla JSP
 			}
-		view.forward(req, res);
-    		
-    		
+
+    		view.forward(req, res);    	
     		
     }
     
