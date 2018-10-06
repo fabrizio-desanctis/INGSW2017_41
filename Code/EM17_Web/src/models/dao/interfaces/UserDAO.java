@@ -9,4 +9,6 @@ import models.User;
 public interface UserDAO {
 	public User getUser (String user) throws ParseException;
 	public boolean createNewUser(User u);
+	public User getAllInfoUser (String id) throws ParseException;
+	public boolean updateUser(User u);
 }

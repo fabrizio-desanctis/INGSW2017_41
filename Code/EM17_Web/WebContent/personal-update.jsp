@@ -1,19 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
-    import="controller.IndexController"
-    import="models.Evento"
-    import="java.util.List"
-    import="java.util.LinkedList"
     import="controller.LoginController"
-    import="java.util.ArrayList"%>
+    import="controller.PersonalController"
+    import="models.User"
+    import="java.text.SimpleDateFormat"
+    import="java.util.Calendar"
+    import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
-<% LoginController logController= new LoginController();
-if(logController.getAutenticato()==false) {%>
+		<%LoginController logController = new LoginController(); %>
+		<% PersonalController personController = new PersonalController();
+		User myUser = null;
+		myUser = (User) request.getAttribute("utente");%>
+		
+	<% if (logController.getAutenticato()  == true && myUser != null) { %>
+	<% SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");%>
+                <% String ago = dataFormat.format(myUser.getDataNascita()); %>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - EM '17</title>
+    <title>Aggiorna dati - EM '17</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -22,52 +28,50 @@ if(logController.getAutenticato()==false) {%>
 </head>
 
 <body>
-	<% 
-	    ArrayList<Integer> error = new ArrayList<Integer>(2);%>
-	<% error = (ArrayList<Integer>) request.getAttribute("errore"); %>
     <nav class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
         <div class="container"><a class="navbar-brand logo" href="index.jsp" style="font-size:54px;padding:0px;margin:-16px;"><strong>EM'17</strong></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
                 class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-<li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Concerti">CONCERTI</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Spettacolo">SPETTACOLO</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Sport">SPORT</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                    <% if(logController.getAutenticato()==false) { %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <% if(logController.getAutenticato()==true) { %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="personal.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
         </div>
     </nav>
-    <main class="page login-page">
+    <main class="page registration-page">
         <section class="clean-block clean-form dark">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Accedi alla tua area personale</h2>
-                    <p>Effettua il log in per accedere alla tua area personale. Potrai aggiungere nuovi evento al carrello, scaricare i tuoi biglietti e molto altro ancora.</p>
+                    <h2 class="text-info">I miei dati</h2>
+                    <p>In questa sezione puoi visualizzare e/o modificare le tue informazioni personali.<br></p>
                 </div>
-                <form method="POST" action="Login">
-                    <div class="form-group"><label for="email">Indirizzo e-mail</label><input name="user" class="form-control item" type="text" id="email"></div>
-                 	
-                    <div class="form-group"><label for="password">Password</label><input name="password" class="form-control" type="password" id="password"></div>
-                     <% if(error != null && error.get(0)==1) {  %>   
-                    <i class="fa fa-exclamation-triangle" style="color:rgb(255,0,0);"></i>
-                    <label style="color:rgb(255,0,0);"><strong>Password errata.</strong></label> <% } %>
-                    <% if(error != null && error.get(1)==1) {  %>   
-                    <i class="fa fa-exclamation-triangle" style="color:rgb(255,0,0);"></i>
-                    <label style="color:rgb(255,0,0);"><strong>Utente non trovato.</strong></label> <% } %>
-                    <button class="btn btn-primary btn-block" type="submit">Log In</button><label style="margin:12px;">Non sei registrato?</label>
-                    
-                    <a href="registration.jsp">Clicca qui</a>
-                    
-                </form>
+              
+                <% Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.YEAR, -18);
+                Date olderDate = cal.getTime();
+                String older = dataFormat.format(olderDate);%>
+                <form method="POST" action="ModifyUser"><label><strong>DATI ANAGRAFICI</strong></label>
+                    <div class="form-group"><label for="name">Nome</label><input value="<%out.print(myUser.getNome());%>" style="text-transform:uppercase" pattern="[a-zA-Z'\s]{2,30}" autofocus required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire il nome." class="form-control item" type="text" inputmode="latin-name" name="nome"></div>
+                    <div class="form-group"><label for="name">Cognome</label><input value="<%out.print(myUser.getCognome());%>" style="text-transform:uppercase" pattern="[a-zA-Z'\s]{2,30}" required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire il cognome." class="form-control item" type="text" inputmode="latin-name" name="cognome"></div>
+                    <div class="form-group"><label for="name">Telefono/Cellulare</label><input value="<%out.print(myUser.getTelefono());%>" style="text-transform:uppercase"  minlength="10" maxlength="10" pattern="\d*" required title="Sono ammessi solo numeri (0-9). Il numero deve essere composto da 10 cifre." placeholder="Inserire recapito telefonico." class="form-control item" type="text" inputmode="tel" name="telefono"></div>
+                    <% if(myUser.getSesso().equals("M")){ %>
+                    <div class="form-group"><label for="name">Sesso</label><select  name="sessoM" class="form-control" style="width:82px;"><option value="M" selected="">M</option><option value="F">F</option></select></div> <% } %>
+                    <% if(myUser.getSesso().equals("F")) { %>
+                    <div class="form-group"><label for="name">Sesso</label><select  name="sessoF" class="form-control" style="width:82px;"><option value="M">M</option><option value="F" selected="">F</option></select></div> <% } %>
+                    <div class="form-group"><label for="name">Data nascita</label><input name="data" required title="L'utente deve avere almeno 18 anni." class="form-control" type="date" value="<%out.print(ago);%>"max="<%out.print(older);%>"></div>
+                    <div class="form-group"><label for="name">Città</label><input value="<%out.print(myUser.getCittà());%>" style="text-transform:uppercase" pattern="[a-zA-Z'\s]{2,30}" required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire una città." class="form-control item" type="text" inputmode="latin-name" id="citta" name="citta"></div>
+                    <div class="form-group"><label for="name">Provincia</label><input value="<%out.print(myUser.getProvincia());%>" style="text-transform:uppercase"minlength="2" maxlength="2" pattern="[a-zA-Z'\s]{2,2}" required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire la provincia." class="form-control item" type="text" inputmode="latin-name" id="provincia" name="provincia"></div>
+                    <div class="form-group"><label for="name">CAP</label><input value="<%out.print(myUser.getCap());%>" style="text-transform:uppercase" name="cap" minlength="5" maxlength="5" pattern="\d*" required title="Sono ammessi solo caratteri numerici." placeholder="Inserire il CAP." class="form-control item" type="text" inputmode="numeric" id="cap" name="cap"></div>
+                    <button class="btn btn-primary btn-block" type="submit">Conferma modifiche</button>
+                    </form>
             </div>
         </section>
     </main>
@@ -118,7 +122,9 @@ if(logController.getAutenticato()==false) {%>
 </body>
 <% } %>
 
-<% if (logController.getAutenticato()==true){ %> 
+<% if (logController.getAutenticato()==false || myUser==null){ %> 
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,7 +148,10 @@ if(logController.getAutenticato()==false) {%>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="SearchEvent2?param=Cultura">CULTURA</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>i miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
+                    <% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
@@ -206,5 +215,4 @@ if(logController.getAutenticato()==false) {%>
 </body>
 
 <% } %>
-
 </html>

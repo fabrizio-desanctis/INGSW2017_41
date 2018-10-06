@@ -20,7 +20,8 @@ import models.dao.interfaces.UserDAO;
 @WebServlet("/Login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static boolean autenticato=false;;
+	private static boolean autenticato=false;
+	private static int idUtente=0;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,6 +34,10 @@ public class LoginController extends HttpServlet {
     
     public boolean getAutenticato() {
     	return autenticato;
+    }
+    
+    public int  getIdUtente() {
+    	return idUtente;
     }
 
 	/**
@@ -59,6 +64,7 @@ public class LoginController extends HttpServlet {
 		if(user != null) {
 			if(user.getPassword().equals(password)) {
 				autenticato=true;
+				idUtente=user.getId();
 				view = request.getRequestDispatcher("index.jsp");
 			}
 			else {
