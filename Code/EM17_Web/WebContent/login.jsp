@@ -39,7 +39,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="dati.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
@@ -55,13 +55,17 @@
                 <form method="POST" action="Login">
                     <div class="form-group"><label for="email">Indirizzo e-mail</label><input name="user" class="form-control item" type="text" id="email"></div>
                  	
-                    <div class="form-group"><label for="password">Password</label><input name="password" class="form-control" type="password" id="password"></div><button class="btn btn-primary btn-block" type="submit">Log In</button><label style="margin:12px;">Non sei registrato?</label>
+                    <div class="form-group"><label for="password">Password</label><input name="password" class="form-control" type="password" id="password"></div>
+                     <% if(error != null && error.get(0)==1) {  %>   
+                    <i class="fa fa-exclamation-triangle" style="color:rgb(255,0,0);"></i>
+                    <label style="color:rgb(255,0,0);"><strong>Password errata.</strong></label> <% } %>
+                    <% if(error != null && error.get(1)==1) {  %>   
+                    <i class="fa fa-exclamation-triangle" style="color:rgb(255,0,0);"></i>
+                    <label style="color:rgb(255,0,0);"><strong>Utente non trovato.</strong></label> <% } %>
+                    <button class="btn btn-primary btn-block" type="submit">Log In</button><label style="margin:12px;">Non sei registrato?</label>
                     
                     <a href="registration.html">Clicca qui</a>
-                    <% if(error != null && error.get(0)==1) {  %>   
-                    <p style="color:red;">Password non corretta!</p> <% } %>
-                    <% if(error != null && error.get(1)==1) {  %>   
-                    <p style="color:red;">Utente non trovato!</p> <% } %>
+                    
                 </form>
             </div>
         </section>

@@ -38,7 +38,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="dati.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
