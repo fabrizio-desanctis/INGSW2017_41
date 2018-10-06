@@ -7,11 +7,10 @@ import java.util.Date;
 
 public class User {
 	private int id;
-	private String nome, cognome, telefono,città, provincia,cap,email,password;
+	private String nome, cognome, telefono,sesso, città, provincia,cap,email,password;
 	private Date dataNascita;
-	private char sesso;
 	
-	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, char sex) {
+	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, String sex) {
 		this.id=i;
 		this.nome=name;
 		this.cognome=cognom;
@@ -114,11 +113,11 @@ public class User {
 		this.dataNascita = dataNascita;
 	}
 
-	public char getSesso() {
+	public String getSesso() {
 		return sesso;
 	}
 
-	public void setSesso(char sesso) {
+	public void setSesso(String sesso) {
 		this.sesso = sesso;
 	}
 	

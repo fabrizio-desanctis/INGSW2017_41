@@ -8,4 +8,5 @@ import models.User;
 
 public interface UserDAO {
 	public User getUser (String user) throws ParseException;
+	public boolean createNewUser(User u);
 }

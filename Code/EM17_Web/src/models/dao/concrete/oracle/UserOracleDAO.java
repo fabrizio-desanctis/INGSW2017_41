@@ -34,4 +34,31 @@ public class UserOracleDAO implements UserDAO {
 		}
 		return u;
 	}
+	
+	@Override
+	public boolean createNewUser(User u) {
+		ArrayList<Object> params = new ArrayList<>();
+	    String query = "INSERT INTO UTENTE (ID_UTENTE,NOME,COGNOME,TELEFONO,SESSO,DATA_NASCITA,CITTA,PROVINCIA,CAP,EMAIL,PASSWORD) VALUES(id_user_sequence.nextval,?,"
+	    		+ "?,?,?,?,?,?,?,?,?)";
+	    
+	    params.add(u.getNome());
+	    params.add(u.getCognome());
+	    params.add(u.getTelefono());
+	    params.add(u.getSesso());
+	    params.add(u.getDataNascita().toString());
+	    params.add(u.getCittà());
+	    params.add(u.getProvincia());
+	    params.add(u.getCap());
+	    params.add(u.getEmail());
+	    params.add(u.getPassword());
+	 
+	    try {
+	        Database.getInstance().execQuery(query, params);
+	    } catch (SQLException ex) {
+	    	System.err.println(ex.getMessage());
+	        return false;
+	    }
+	    
+	    return true;
+	}
 }
