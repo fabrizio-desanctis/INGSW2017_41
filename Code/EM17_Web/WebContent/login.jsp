@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Brand</title>
+    <title>Login - EM '17</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -64,7 +64,7 @@
                     <label style="color:rgb(255,0,0);"><strong>Utente non trovato.</strong></label> <% } %>
                     <button class="btn btn-primary btn-block" type="submit">Log In</button><label style="margin:12px;">Non sei registrato?</label>
                     
-                    <a href="registration.html">Clicca qui</a>
+                    <a href="registration.jsp">Clicca qui</a>
                     
                 </form>
             </div>

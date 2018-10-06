@@ -49,7 +49,7 @@
         <section>
             <form method="POST" action="SearchEvent2" class="search-form" style="margin:14px;">
                 <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div><input name=cerca class="form-control" type="text" placeholder="Cosa stai cercando?">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search"></i></span></div><input name=cerca autofocus class="form-control" type="text" placeholder="Cosa stai cercando?">
                     <div class="input-group-append"><button class="btn btn-primary" type="submit" style="background-color:rgb(59,153,224);">CERCA</button></div>
                 </div>
             </form>
