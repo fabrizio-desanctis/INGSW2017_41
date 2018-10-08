@@ -36,6 +36,14 @@ public class LoginController extends HttpServlet {
     	return autenticato;
     }
     
+    public void setAutenticato() {
+    	autenticato=false;
+    }
+    
+    public void setIdUtente() {
+    	idUtente=0;
+    }
+    
     public int  getIdUtente() {
     	return idUtente;
     }

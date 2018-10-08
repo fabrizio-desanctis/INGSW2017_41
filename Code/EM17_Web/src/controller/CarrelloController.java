@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import models.Evento;
 import models.dao.concrete.oracle.EventoOracleDAO;
 import models.dao.interfaces.EventoDAO;
@@ -28,7 +27,23 @@ public class CarrelloController extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
+    public boolean statusCart (int id_utente) {
+    	EventoDAO evento = new EventoOracleDAO();
+		Evento myevento = new Evento();
+		try {
+			myevento = evento.getEventoCarrello(Integer.toString(id_utente));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(myevento==null)
+			return false;
+		
+		return true;
+    	
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -6,10 +6,14 @@
     import="java.util.LinkedList"
     import="java.text.SimpleDateFormat"
 	import="java.util.Date"
-	import="controller.LoginController"%>
+	import="controller.LoginController"
+	import="controller.CarrelloController"
+	import="controller.ProductController" %>
 <!DOCTYPE html>
 <html>
-
+<% CarrelloController cart = new CarrelloController();
+	LoginController log = new LoginController();
+	ProductController pro = new ProductController();%>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,15 +42,17 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.html">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
+					<% if(cart.statusCart(logController.getIdUtente())==false){ %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
+                    <% if(cart.statusCart(logController.getIdUtente())==true){ %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(1) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>                </ul>
         </div>
         </div>
     </nav>
     <main class="page product-page">
     	<% List <Evento> list= new LinkedList <Evento>();
                                 		list = (List<Evento>) request.getAttribute("eventi"); %>
-                                		<% Evento e = list.get(0); %>
+                                		<% Evento e = list.get(0);   pro.setIdEvento(e.getId()); %>
                                 		<% SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         				String dateFormat = dataFormat.format(e.getData()); %>
         <section class="clean-block clean-product dark">
@@ -67,9 +73,19 @@
                                         <p><% out.print(dateFormat); %></p>
                                         <p><% out.print(e.getDescrizione()); %></p>
                                     </div>
+                                    
                                     <div class="form-group">
+                                    <form method="POST" action="AddToCart" class="search-form">
                                         <div class="price"><label><strong>Prezzo biglietto:&nbsp;</strong></label>
-                                            <h3 style="color:rgb(255,0,0);">EUR <% out.print(e.getPrezzo()); %></h3><label><strong>Quantità</strong>:&nbsp;</label><input type="number" value="1" min="1" max="10" step="1" style="width:45px;"></div><button class="btn btn-primary" type="button"><i class="icon-basket"></i>Aggiungi al carrello</button></div>
+                                            <h3 style="color:rgb(255,0,0);">EUR <% out.print(e.getPrezzo()); %></h3>
+                                            
+                                            <label><strong>Quantità</strong>:&nbsp;</label><input name="quantita" type="number" value="1" min="1" max="5" step="1" style="width:45px;"></div>
+                                           	<%int utente = log.getIdUtente(); %>
+                                           	<% if(cart.statusCart(utente)==false && logController.getAutenticato()==true){ %>
+                                            <button class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button><% } %>
+                                            <% if(cart.statusCart(utente)==true || logController.getAutenticato()==false){ %>
+                                            <button disabled class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button><% } %></div> 
+                                            </form>
                                 </div>
                             </div>
                         </div>

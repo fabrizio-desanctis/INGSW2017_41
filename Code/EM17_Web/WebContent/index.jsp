@@ -5,6 +5,7 @@
     import="java.util.List"
     import="java.util.LinkedList"
     import="controller.LoginController"
+    import="controller.CarrelloController"
      %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +23,8 @@
 
 <body>
 	<% IndexController controller = new IndexController(); %>
-	<% LoginController logController = new LoginController(); %>
+	<% LoginController logController = new LoginController();
+		CarrelloController cart = new CarrelloController();%>
     <nav class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
         <div class="container"><a class="navbar-brand logo" href="index.jsp" style="font-size:54px;padding:0px;margin:-16px;"><strong>EM'17</strong></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
@@ -39,7 +41,10 @@
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
+                    <% if(cart.statusCart(logController.getIdUtente())==false){ %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
+                    <% if(cart.statusCart(logController.getIdUtente())==true){ %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(1) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
                 </ul>
         </div>
         </div>
