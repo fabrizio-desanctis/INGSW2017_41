@@ -87,12 +87,84 @@
                             <div class="summary">
                             <% float totale = e.getPrezzo()*e.getNumeroBiglietti();%>
                                 <h3>RIEPILOGO</h3>
-                                <h4><span class="text">Subtotal (EUR)</span><span class="price"><%out.print(totale); %></span></h4>
-                                <h4><span class="text">Altri costi (EUR)</span><span class="price">0</span></h4>
-                                <h4><span class="text">Totale (EUR)</span><span id="total" class="price"><strong id="total"><% out.print(totale); %></strong></span></h4>
-                                <br>
-                            
+                                <h4><span class="text">Subtotal (EUR)</span> 
+                                <div class="form-group"><input  style="text-transform:uppercase" value="<%out.print(totale); %>" class="form-control item" type="text" readonly inputmode="latin-name" name="nome"></div>
+                                </h4>
+                                <h4><span class="text">Altri costi (EUR)</span> 
+                                <div class="form-group"><input  style="text-transform:uppercase" value="0" class="form-control item" type="text" readonly inputmode="latin-name" name="nome"></div>
+                                </h4>
+								<h4><span class="text">TOTALE (EUR)</span> 
+                                <div class="form-group"><input  style="text-transform:uppercase" value="<%out.print(totale); %>" class="form-control item" type="text" readonly inputmode="latin-name" id="paypal"></div>
+                                </h4>                                <br>
+                                
+<div align="center" id="paypal-button-container"></div>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+// Render the PayPal button
+paypal.Button.render({
+// Set your environment
+env: 'sandbox', // sandbox | production
 
+// Specify the style of the button
+style: {
+  layout: 'vertical',  // horizontal | vertical
+  size:   'medium',    // medium | large | responsive
+  shape:  'rect',      // pill | rect
+  color:  'gold'       // gold | blue | silver | white | black
+},
+
+// Specify allowed and disallowed funding sources
+//
+// Options:
+// - paypal.FUNDING.CARD
+// - paypal.FUNDING.CREDIT
+// - paypal.FUNDING.ELV
+funding: {
+  allowed: [
+    paypal.FUNDING.CARD,
+    paypal.FUNDING.CREDIT
+  ],
+  disallowed: []
+},
+
+// PayPal Client IDs - replace with your own
+// Create a PayPal app: https://developer.paypal.com/developer/applications/create
+client: {
+  sandbox: 'AXHY_mumI2bkf5VqWpEOqYTeFNUrYMjlLuGW7Isbt7CCtlLLhVEryaf2x7ph1yVUm5x-83jFaI1Q457s',
+  production: 'EH2dxTVJbF89-qs_cuMW2A58xGfR9xMpq4bzaWDLU6nx8riq3NmqU6GOePsgTPZUbeIXN47uH-vg0fvB'
+},
+
+payment: function (data, actions) {
+	var txt = document.getElementById("paypal").value;
+  return actions.payment.create({
+    payment: {
+      transactions: [
+        {
+          amount: {
+            total: txt,
+            currency: 'EUR'
+          }
+        }
+      ]
+    }
+  });
+},
+
+onAuthorize: function (data, actions) {
+  return actions.payment.execute()
+    .then(function (res) {
+    	if (res.error === 'INSTRUMENT_DECLINED') {
+    		window.location.href = 'payment-failed.html';
+          }
+    	else {
+    		window.location.href = 'SearchEvent2?param=Sport';
+    	}
+    	
+    });
+}
+}, '#paypal-button-container');
+</script>                      
+                                
                         </div>
                     </div>
                 </div>
