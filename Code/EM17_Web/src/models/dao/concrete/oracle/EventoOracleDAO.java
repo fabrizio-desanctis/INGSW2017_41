@@ -131,6 +131,29 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 
 
 @Override
+public Evento getEventoCarrello (String utente) throws ParseException {
+	String query = "Select evento.nome as nome_evento,carrello.quantita as quantita,evento.prezzo as prezzo_evento,evento.linkimmagine as link_evento,evento.id as id_evento " + 
+			"from (carrello  inner join evento on carrello.id_evento=evento.id) inner join utente on utente.id_utente=carrello.id_utente " + 
+			"where utente.id_utente=" + utente;
+	ArrayList<Object> params = null;
+	Evento e = null;
+
+	
+	try {
+		ResultSet rs = Database.getInstance().execQuery(query, params);
+		if(rs!= null){
+			while(rs.next()){
+					e= new Evento(rs.getInt("id_evento"),rs.getString("nome_evento"),rs.getFloat("prezzo_evento"),rs.getString("link_evento"),rs.getInt("quantita"));
+					
+			}
+		}
+	} catch (SQLException ex) { 
+	}
+	return e;
+}
+
+
+@Override
 public ArrayList<Evento> getEventibyID (String search ) throws ParseException {
 	String query = "select * from Evento where id="+search;
 	ArrayList<Object> params = null;
