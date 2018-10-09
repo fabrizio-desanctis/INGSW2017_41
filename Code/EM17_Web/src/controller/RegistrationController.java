@@ -73,12 +73,12 @@ public class RegistrationController extends HttpServlet {
 		if(user == null) {
 				User newUser = new User(0,nome,cognome,numero,citta,provincia,cap,email,password,date,sesso);
 				usr.createNewUser(newUser);
-				view = request.getRequestDispatcher("registration-success.html");
+				view = request.getRequestDispatcher("registration-success.jsp");
 		}
 		
 			else {
 				
-				view = request.getRequestDispatcher("registration-failed.html");
+				view = request.getRequestDispatcher("registration-failed.jsp");
 			}
 		
 		view.forward(request, response);

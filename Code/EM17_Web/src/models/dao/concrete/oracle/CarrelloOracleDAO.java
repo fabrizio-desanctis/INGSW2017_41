@@ -1,7 +1,11 @@
 package models.dao.concrete.oracle;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import models.Carrello;
 import models.Evento;
 import models.dao.interfaces.CarrelloDAO;
 
@@ -25,6 +29,26 @@ public class CarrelloOracleDAO implements CarrelloDAO {
 	    }
 	    
 	    return true;
+	}
+	
+	
+	public Carrello getCarrello (String utente) throws ParseException {
+		String query = "Select * from Carrello where id_utente="+utente;
+		ArrayList<Object> params = null;
+		Carrello c = null;
+
+		
+		try {
+			ResultSet rs = Database.getInstance().execQuery(query, params);
+			if(rs!= null){
+				while(rs.next()){
+						c= new Carrello(rs.getInt("id_carrello"),rs.getInt("id_utente"),rs.getInt("id_evento"),rs.getInt("quantita"));
+						
+				}
+			}
+		} catch (SQLException ex) { 
+		}
+		return c;
 	}
 	
 	

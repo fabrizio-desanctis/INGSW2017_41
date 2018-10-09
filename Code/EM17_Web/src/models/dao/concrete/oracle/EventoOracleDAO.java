@@ -43,6 +43,30 @@ public LinkedList<Evento> getListaEventi () throws ParseException {
 }
 
 
+public int getRestanti (int id_evento) throws ParseException {
+	String query = "select nrbiglietti - (select COALESCE(sum(quantita),0) from ordine where id_evento=?) as restanti from Evento where id=?" ;
+	ArrayList<Object> params = new ArrayList<>();
+	params.add(id_evento);
+	params.add(id_evento);
+	
+	int ritorno=0;
+	
+	try {
+		ResultSet rs = Database.getInstance().execQuery(query, params);
+		if(rs!= null){
+			while(rs.next()){
+				ritorno= rs.getInt("restanti");
+				
+				
+				
+			}
+		}
+	} catch (SQLException ex) { 
+	}
+	return ritorno;
+}
+
+
 @Override
 public LinkedList<Evento> getAllEventi () throws ParseException {
 	String query = "select * from Evento" ;
@@ -111,7 +135,7 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 	String query = "select * from Evento where lower(nome) like lower ('%" + search + "%') OR lower(descrizione) like lower ('%" + search + "%') OR lower(luogo) like lower ('%" + search + "%')";
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -121,7 +145,8 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
-					list.add(x);	
+					if(today.before(x.getData()))
+						list.add(x);	
 			}
 		}
 	} catch (SQLException ex) { list=null;
@@ -132,23 +157,29 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 
 @Override
 public Evento getEventoCarrello (String utente) throws ParseException {
-	String query = "Select evento.nome as nome_evento,carrello.quantita as quantita,evento.prezzo as prezzo_evento,evento.linkimmagine as link_evento,evento.id as id_evento " + 
+	String query = "Select evento.nome as nome_evento,evento.data as data, carrello.quantita as quantita,evento.prezzo as prezzo_evento,evento.linkimmagine as link_evento,evento.id as id_evento " + 
 			"from (carrello  inner join evento on carrello.id_evento=evento.id) inner join utente on utente.id_utente=carrello.id_utente " + 
 			"where utente.id_utente=" + utente;
 	ArrayList<Object> params = null;
 	Evento e = null;
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
 		if(rs!= null){
 			while(rs.next()){
-					e= new Evento(rs.getInt("id_evento"),rs.getString("nome_evento"),rs.getFloat("prezzo_evento"),rs.getString("link_evento"),rs.getInt("quantita"));
-					
+				    SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
+					Date bbDate;
+					bbDate = sdf.parse(rs.getString("data"));
+					e= new Evento(rs.getInt("id_evento"),rs.getString("nome_evento"),rs.getFloat("prezzo_evento"),rs.getString("link_evento"),rs.getInt("quantita"),bbDate);
+					if(!today.before(e.getData()))
+						e=null;
+
 			}
 		}
 	} catch (SQLException ex) { 
 	}
+	
 	return e;
 }
 
@@ -158,7 +189,7 @@ public ArrayList<Evento> getEventibyID (String search ) throws ParseException {
 	String query = "select * from Evento where id="+search;
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -168,6 +199,7 @@ public ArrayList<Evento> getEventibyID (String search ) throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					
 					list.add(x);	
 			}
 		}
@@ -181,7 +213,7 @@ public ArrayList<Evento> getEventiSport () throws ParseException {
 	String query = "select * from Evento where tipologia like 'Sport'";
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -191,6 +223,7 @@ public ArrayList<Evento> getEventiSport () throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					if(today.before(x.getData()))
 					list.add(x);	
 			}
 		}
@@ -205,7 +238,7 @@ public ArrayList<Evento> getEventiSpettacolo () throws ParseException {
 	String query = "select * from Evento where tipologia like 'Spettacolo'";
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -215,6 +248,7 @@ public ArrayList<Evento> getEventiSpettacolo () throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					if(today.before(x.getData()))
 					list.add(x);	
 			}
 		}
@@ -228,7 +262,7 @@ public ArrayList<Evento> getEventiConcerti () throws ParseException {
 	String query = "select * from Evento where tipologia like 'Concerti'";
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -238,6 +272,7 @@ public ArrayList<Evento> getEventiConcerti () throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					if(today.before(x.getData()))
 					list.add(x);	
 			}
 		}
@@ -252,7 +287,7 @@ public ArrayList<Evento> getEventiCultura () throws ParseException {
 	String query = "select * from Evento where tipologia like 'Cultura'";
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-
+	Date today = new Date();
 	
 	try {
 		ResultSet rs = Database.getInstance().execQuery(query, params);
@@ -262,6 +297,8 @@ public ArrayList<Evento> getEventiCultura () throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("DATA"));
 					Evento x= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+					if(today.before(x.getData()))
+
 					list.add(x);	
 			}
 		}

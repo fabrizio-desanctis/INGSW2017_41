@@ -19,6 +19,7 @@ import models.dao.interfaces.EventoDAO;
 @WebServlet("/MyCarrello")
 public class CarrelloController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static double prezzoEvento;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -28,11 +29,20 @@ public class CarrelloController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
+    public void setPrezzoEvento(double p) {
+    	prezzoEvento=p;
+    }
+    
+    public double getPrezzoEvento() {
+    	return prezzoEvento;
+    }
+    
     public boolean statusCart (int id_utente) {
     	EventoDAO evento = new EventoOracleDAO();
 		Evento myevento = new Evento();
 		try {
 			myevento = evento.getEventoCarrello(Integer.toString(id_utente));
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -27,6 +27,7 @@ public interface EventoDAO {
 	public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseException;
 	public ArrayList<Evento> getEventibyID (String search ) throws ParseException ;
 	public boolean updateEvento(Evento e);
+	public int getRestanti (int id_evento) throws ParseException;
 	public Evento getEventoCarrello (String utente) throws ParseException;
 	
 }

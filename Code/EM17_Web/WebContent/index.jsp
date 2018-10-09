@@ -137,6 +137,11 @@
                         <h4>QR-Code</h4>
                         <p>Biglietto in formato digitale. Basta sprechi di carta e spese di spedzione. Potrai semplicemente fornire &nbsp;il QR-Code direttamente dal tuo smartphone &nbsp;al personale per poter entrare in qualsiasi evento.&nbsp;</p>
                     </div>
+                    <div class="col-md-5 feature-box"><i class="icon-magnifier icon"></i>
+    <h4>Ricerca intelligente</h4>
+    <p style="padding:0px;margin:0px;">Barra di ricerca intelligente. Grazie alla nostra barra di ricerca potrai cercare qualsiasi evento presente sul nostro sito. Cerca eventi per nome,tipologia,luogo o fornendo una descrizione. Inserisci le chiavi di ricerca che preferisci ed il nostro algoritmo si
+        occuperà di tutto.</p>
+</div>
                     <div class="col-md-5 feature-box"><i class="icon-earphones-alt icon"></i>
                         <h4>Servizio Clienti</h4>
                         <p style="font-size:21px;padding:0px;margin:-2px;"><strong>06-******08</strong></p>

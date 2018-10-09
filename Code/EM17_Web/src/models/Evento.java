@@ -25,12 +25,13 @@ public class Evento {
 		
 	}
 	
-	public Evento(int id,String nome,float prezzo,String link,int numerob) {
+	public Evento(int id,String nome,float prezzo,String link,int numerob,Date d) {
 		this.id=id;
 		this.nome=nome;
 		this.prezzo=prezzo;
 		this.linkImmagine=link;
 		this.numeroBiglietti=numerob;
+		this.data=d;
 	}
 	
 	public Evento(int id,String nome,String tipo,Date date,String localita,String luogo,float prezzo,int biglietti,String desc,String link) {

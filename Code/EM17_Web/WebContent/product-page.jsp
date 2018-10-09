@@ -6,6 +6,8 @@
     import="java.util.LinkedList"
     import="java.text.SimpleDateFormat"
 	import="java.util.Date"
+	import="models.dao.concrete.oracle.EventoOracleDAO"
+	import="models.dao.interfaces.EventoDAO"
 	import="controller.LoginController"
 	import="controller.CarrelloController"
 	import="controller.ProductController" %>
@@ -79,12 +81,25 @@
                                         <div class="price"><label><strong>Prezzo biglietto:&nbsp;</strong></label>
                                             <h3 style="color:rgb(255,0,0);">EUR <% out.print(e.getPrezzo()); %></h3>
                                             
-                                            <label><strong>Quantità</strong>:&nbsp;</label><input name="quantita" type="number" value="1" min="1" max="5" step="1" style="width:45px;"></div>
+                                            <label><strong>Quantità</strong>:&nbsp;</label>
+                                            <% EventoDAO ev = new EventoOracleDAO();
+                                            	Integer restanti = new Integer(ev.getRestanti(e.getId()));
+                                            if(restanti>5) {%>
+                                            <input name="quantita" type="number" value="1" min="1" max="5" step="1" style="width:45px;"> <% } %>
+                                            <% if(restanti<5 && restanti>0) {%>
+                                            <input name="quantita" type="number" value="1" min="1" max="<%out.print(restanti); %>" step="1" style="width:45px;"> <% } %>
+                                           	<% if(restanti==0) {%>
+                                            <input disabled name="quantita" type="number" value="0" min="0" max="0" step="1" style="width:45px;"> <% } %>
+                                            </div>
                                            	<%int utente = log.getIdUtente(); %>
-                                           	<% if(cart.statusCart(utente)==false && logController.getAutenticato()==true){ %>
+                                           	<% if(cart.statusCart(utente)==false && logController.getAutenticato()==true && restanti>0 ){ %>
                                             <button class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button><% } %>
-                                            <% if(cart.statusCart(utente)==true || logController.getAutenticato()==false){ %>
-                                            <button disabled class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button><% } %></div> 
+                                            <% if(cart.statusCart(utente)==true || logController.getAutenticato()==false || restanti==0){ %>
+                                            <button disabled class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button>
+                                            <% if(restanti==0){ %> <span style="color:red"><strong>SOLD OUT</strong></span> <% } %>
+                                            
+                                            	
+                                            <% } %></div> 
                                             </form>
                                 </div>
                             </div>
