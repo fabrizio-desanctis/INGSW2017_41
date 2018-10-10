@@ -43,6 +43,34 @@ public LinkedList<Evento> getListaEventi () throws ParseException {
 }
 
 
+public LinkedList<Evento> getPopolari () throws ParseException {
+	String query = "select id,nome,data,luogo,localita,nrbiglietti,descrizione,linkimmagine,tipologia,prezzo,(select count(*) from Biglietto where id_evento = id)as venduti from Evento order by venduti desc" ;
+	ArrayList<Object> params = null;
+	LinkedList<Evento> list = new LinkedList<Evento>();
+	Date today = new Date(System.currentTimeMillis());
+	
+	try {
+		ResultSet rs = Database.getInstance().execQuery(query, params);
+		if(rs!= null){
+			while(rs.next()){
+				try {
+					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
+			        Date bbDate;
+			        bbDate = sdf.parse(rs.getString("DATA"));
+			        Evento e= new Evento(rs.getInt("ID"),rs.getString("NOME"),rs.getString("TIPOLOGIA"),bbDate,rs.getString("LOCALITA"),rs.getString("LUOGO"),rs.getFloat("PREZZO"),rs.getInt("NRBIGLIETTI"),rs.getString("DESCRIZIONE"),rs.getString("LINKIMMAGINE"));
+						if(today.before(e.getData()))
+							list.add(e);
+				}catch (ParseException e) {  System.err.println(e.getMessage());}
+				
+				
+			}
+		}
+	} catch (SQLException ex) { list=null;
+	}
+	return list;
+}
+
+
 public int getRestanti (int id_evento) throws ParseException {
 	String query = "select nrbiglietti - (select COALESCE(sum(quantita),0) from ordine where id_evento=?) as restanti from Evento where id=?" ;
 	ArrayList<Object> params = new ArrayList<>();

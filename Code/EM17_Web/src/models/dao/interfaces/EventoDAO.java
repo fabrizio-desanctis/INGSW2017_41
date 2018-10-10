@@ -13,7 +13,7 @@ import java.util.TreeSet;
 */
 
 public interface EventoDAO {
-
+	public LinkedList<Evento> getPopolari () throws ParseException;
 	public LinkedList<Evento> getListaEventi () throws ParseException;
 	public LinkedList<Evento> getAllEventi () throws ParseException;
 	public ArrayList<Object> getInfoEventi (Evento e);

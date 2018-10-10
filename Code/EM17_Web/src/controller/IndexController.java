@@ -46,7 +46,7 @@ public class IndexController extends HttpServlet {
     	EventoDAO e = new EventoOracleDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
-    	list = e.getListaEventi();
+    	list = e.getPopolari();
     	int i=0;
     	for (Evento x: list) {
     		if(i<5) {
