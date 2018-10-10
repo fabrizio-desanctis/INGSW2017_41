@@ -70,6 +70,7 @@ public class PDFGen extends HttpServlet {
     	        Carrello c = (Carrello) request.getAttribute("carrello");
     	        ServletContext context = request.getServletContext();
     	        String path = context.getRealPath("/");
+    	        System.out.println(path);
     	        
     	        
     	        /* Creates document */
@@ -81,11 +82,11 @@ public class PDFGen extends HttpServlet {
     	        
     	        try {
     	        	
-    	        	ord.createNewOrdine(id, c.getIdEvento(), c.getIdUtente(), c.getQuantità(),c.getQuantità(),myPath);
+    	        	ord.createNewOrdine(Integer.toString(c.getIdCarrello()), c.getIdEvento(), c.getIdUtente(), c.getQuantità(),c.getQuantità(),myPath);
     				Date date = new Date();
     				CarrelloController controllo = new CarrelloController();
-    				myOrdine = ord.getOrdineInfo(id);
-    				Biglietto b = new Biglietto(0,c.getIdEvento(),"NO",id);
+    				myOrdine = ord.getOrdineInfo(Integer.toString(c.getIdCarrello()));
+    				Biglietto b = new Biglietto(0,c.getIdEvento(),"NO",Integer.toString(myOrdine.getId_ordine()));
     				for(int i=0;i<c.getQuantità();i++) {
     					bigl.createNewTicket(b);
 					}
@@ -100,7 +101,7 @@ public class PDFGen extends HttpServlet {
     	            document.add( new Paragraph("Grazie per aver acquistato! Ti ricordiamo che tutto ciè che ti occorre per accedere al tuo evento è il QR-Code.", FONT2) );
     	            document.add(Chunk.NEWLINE);
     	            int index=1;
-    	            for(Integer i: bigl.getListaBiglietti(id)) {
+    	            for(Integer i: bigl.getListaBiglietti(Integer.toString(myOrdine.getId_ordine()))) {
     	            BarcodeQRCode barcodeQRCode = new BarcodeQRCode(i.toString(), 1000, 1000, null);
 					Image codeQrImage = barcodeQRCode.getImage();
 					codeQrImage.scaleAbsolute(100, 100);

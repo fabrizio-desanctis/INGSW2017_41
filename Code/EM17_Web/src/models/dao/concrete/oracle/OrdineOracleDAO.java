@@ -43,7 +43,7 @@ public class OrdineOracleDAO implements OrdineDAO {
 			ResultSet rs = Database.getInstance().execQuery(query, params);
 			if(rs!= null){
 				while(rs.next()){
-						o = new Ordine(Double.parseDouble(rs.getString("id_ordine")),0, 0,rs.getInt("quantita"),null,rs.getDouble("totale"),rs.getString("pdflink"),rs.getDouble("prezzo"),rs.getString("nome"));
+						o = new Ordine(Integer.parseInt(rs.getString("id_ordine")),0, 0,rs.getInt("quantita"),null,rs.getDouble("totale"),rs.getString("pdflink"),rs.getDouble("prezzo"),rs.getString("nome"));
 						
 				}
 			}

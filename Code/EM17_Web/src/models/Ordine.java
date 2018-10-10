@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Ordine {
 	private int id_utente,id_evento,quantita;
-	private double id_ordine;
+	private int id_ordine;
 	private Date data;
 	private String pdf;
 	private double totale,prezzo;
@@ -27,7 +27,7 @@ public class Ordine {
 		this.nome_evento = nome_evento;
 	}
 
-	public void setId_ordine(double id_ordine) {
+	public void setId_ordine(int id_ordine) {
 		this.id_ordine = id_ordine;
 	}
 
@@ -45,7 +45,7 @@ public class Ordine {
 		
 	}
 	
-	public Ordine(double ido,int idu, int ide,int quantita,Date data,double totale,String pdf,double prezzo,String nome) {
+	public Ordine(int ido,int idu, int ide,int quantita,Date data,double totale,String pdf,double prezzo,String nome) {
 		this.id_ordine=ido;
 		this.id_utente=idu;
 		this.id_evento=ide;
@@ -66,13 +66,11 @@ public class Ordine {
 		return totale;
 	}
 
-	public double getId_ordine() {
+	public int getId_ordine() {
 		return id_ordine;
 	}
 
-	public void setId_ordine(int id_ordine) {
-		this.id_ordine = id_ordine;
-	}
+	
 
 	public int getId_utente() {
 		return id_utente;
