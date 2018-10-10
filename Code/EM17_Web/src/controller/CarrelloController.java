@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Evento;
+import models.dao.concrete.oracle.CarrelloOracleDAO;
 import models.dao.concrete.oracle.EventoOracleDAO;
+import models.dao.interfaces.CarrelloDAO;
 import models.dao.interfaces.EventoDAO;
 
 /**
@@ -62,8 +65,15 @@ public class CarrelloController extends HttpServlet {
 		EventoDAO evento = new EventoOracleDAO();
 		Evento myevento = new Evento();
 		RequestDispatcher view = null;
+		CarrelloDAO car = new CarrelloOracleDAO();
+		Date today = new Date();
 		try {
 			myevento = evento.getEventoCarrello(id_utente);
+			if(myevento != null)
+			if((!today.before(myevento.getData())) ||  evento.getRestanti(myevento.getId())==0 ) {
+				myevento=null;
+				car.deleteCarrello(Integer.parseInt(id_utente));
+				}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

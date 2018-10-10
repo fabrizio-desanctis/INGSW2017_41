@@ -6,7 +6,9 @@
     import="models.User"
     import="java.text.SimpleDateFormat"
     import="java.util.Calendar"
-    import="java.util.Date"%>
+    import="java.util.Date"
+    import="models.dao.interfaces.EventoDAO"
+    import="models.dao.concrete.oracle.EventoOracleDAO"%>
 <!DOCTYPE html>
 <html>
 	<%LoginController logController = new LoginController(); %>

@@ -172,8 +172,8 @@ public Evento getEventoCarrello (String utente) throws ParseException {
 					Date bbDate;
 					bbDate = sdf.parse(rs.getString("data"));
 					e= new Evento(rs.getInt("id_evento"),rs.getString("nome_evento"),rs.getFloat("prezzo_evento"),rs.getString("link_evento"),rs.getInt("quantita"),bbDate);
-					if(!today.before(e.getData()))
-						e=null;
+					//if(!today.before(e.getData()))
+						//e=null;
 
 			}
 		}

@@ -61,7 +61,7 @@ public class PagamentoController extends HttpServlet {
 			
 			else {
 				request.setAttribute("ordine", null);
-				view = request.getRequestDispatcher("payment-succes.html");
+				view = request.getRequestDispatcher("payment-failed.html");
 				view.forward(request, response);
 			}
 		} catch (ParseException e) {
