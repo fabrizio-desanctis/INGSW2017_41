@@ -39,7 +39,7 @@ public class Database {
     
     private Connection conn;
     private final int connections; //total number of connections.
-    private static final String MAX_POOL = "250";
+    //private static final String MAX_POOL = "250";
     
     private Database() {
         int n=0;
