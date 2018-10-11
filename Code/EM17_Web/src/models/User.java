@@ -7,10 +7,10 @@ import java.util.Date;
 
 public class User {
 	private int id;
-	private String nome, cognome, telefono,sesso, città, provincia,cap,email,password;
+	private String nome, cognome, telefono,sesso, città, provincia,cap,email,password,indirizzo;
 	private Date dataNascita;
 	
-	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, String sex) {
+	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, String sex,String indirizzo) {
 		this.id=i;
 		this.nome=name;
 		this.cognome=cognom;
@@ -22,6 +22,7 @@ public class User {
 		this.password=pw;
 		this.dataNascita=dt;
 		this.sesso=sex;
+		this.indirizzo=indirizzo;
 	}
 	
 	public User() {
@@ -122,6 +123,17 @@ public class User {
 		this.sesso = sesso;
 	}
 	
+	
+	
+	
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+
 	public static String convertPasswd(String pass) {
 	    String password = null;
 	    MessageDigest mdEnc;

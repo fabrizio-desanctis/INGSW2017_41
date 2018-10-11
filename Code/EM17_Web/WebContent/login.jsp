@@ -40,8 +40,8 @@ if(logController.getAutenticato()==false) {%>
                     <% if(logController.getAutenticato()==false) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="personal.jsp"><em>I miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="personal.jsp"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.jsp">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
@@ -144,8 +144,10 @@ if(logController.getAutenticato()==false) {%>
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>i miei dati &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-<% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
+<% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %><% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
                     <% if(cart.statusCart(logController.getIdUtente())==true){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(1) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>                </ul>

@@ -41,8 +41,10 @@
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-					<% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
+<% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>					<% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
                     <% if(cart.statusCart(logController.getIdUtente())==true){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(1) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>             
@@ -71,6 +73,7 @@
                     <% if(myUser.getSesso().equals("F")) { %>
                     <div class="form-group"><label for="name">Sesso</label><select  name="sessoF" class="form-control" style="width:82px;"><option value="M">M</option><option value="F" selected="">F</option></select></div> <% } %>
                     <div class="form-group"><label for="name">Data nascita</label><input name="data" required title="L'utente deve avere almeno 18 anni." class="form-control" type="date" value="<%out.print(ago);%>"max="<%out.print(older);%>"></div>
+                    <div class="form-group"><label for="name">Indirizzo</label><input value="<%out.print(myUser.getIndirizzo());%>" style="text-transform:uppercase"  required title="Inserire l'indirizzo." placeholder="Inserire l'indirizzo." class="form-control item" type="text" inputmode="latin-name" name="cognome"></div>
                     <div class="form-group"><label for="name">Città</label><input value="<%out.print(myUser.getCittà());%>" style="text-transform:uppercase" pattern="[a-zA-Z'\s]{2,30}" required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire una città." class="form-control item" type="text" inputmode="latin-name" id="citta" name="citta"></div>
                     <div class="form-group"><label for="name">Provincia</label><input value="<%out.print(myUser.getProvincia());%>" style="text-transform:uppercase"minlength="2" maxlength="2" pattern="[a-zA-Z'\s]{2,2}" required title="Sono ammessi solo caratteri alfabetici." placeholder="Inserire la provincia." class="form-control item" type="text" inputmode="latin-name" id="provincia" name="provincia"></div>
                     <div class="form-group"><label for="name">CAP</label><input value="<%out.print(myUser.getCap());%>" style="text-transform:uppercase" name="cap" minlength="5" maxlength="5" pattern="\d*" required title="Sono ammessi solo caratteri numerici." placeholder="Inserire il CAP." class="form-control item" type="text" inputmode="numeric" id="cap" name="cap"></div>
@@ -156,8 +159,10 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.jsp">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
+<% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>                    <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.jsp">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
         </div>

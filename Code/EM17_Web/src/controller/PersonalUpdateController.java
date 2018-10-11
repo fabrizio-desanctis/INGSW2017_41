@@ -46,7 +46,7 @@ public class PersonalUpdateController extends HttpServlet {
     	String numero = request.getParameter("telefono");
     	String sessoM = request.getParameter("sessoM");
     	String sessoF = request.getParameter("sessoF");
-    	
+    	String indirizzo = request.getParameter("indirizzo");
     
     	String data = request.getParameter("data");
     	SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
@@ -80,7 +80,7 @@ public class PersonalUpdateController extends HttpServlet {
     		
     		
     	LoginController log = new LoginController();
-		User myUser = new User(log.getIdUtente(),nome,cognome,numero,citta,provincia,cap,null,null,date,sesso);
+		User myUser = new User(log.getIdUtente(),nome,cognome,numero,citta,provincia,cap,null,null,date,sesso,indirizzo);
     
     			
 		request.setAttribute("utente", myUser);

@@ -43,8 +43,10 @@
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
 					<li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li>           
-				   <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-					<% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
+<% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>					<% CarrelloController cart=new CarrelloController(); if(cart.statusCart(logController.getIdUtente())==false){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>
                     <% if(cart.statusCart(logController.getIdUtente())==true){ %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyCarrello?param=<% out.print(logController.getIdUtente()); %>">CARRELLO(1) &nbsp;<i class="fa fa-shopping-cart"></i></a></li> <% } %>                </ul>
@@ -67,6 +69,7 @@
                     <div class="form-group"><label for="name">Telefono/Cellulare</label><input style="text-transform:uppercase" value="<%out.print(myUser.getTelefono());%>" class="form-control item" type="text" readonly="" inputmode="tel" name="telefono"></div>
                     <div class="form-group"><label for="name">Sesso</label><input style="width:82px; style="text-transform:uppercase" value="<%out.print(myUser.getSesso());%>" class="form-control item" type="text" readonly="" inputmode="tel" name="sesso"></div>
                     <div class="form-group"><label for="name">Data nascita</label><input value="<%out.print(ago);%>" class="form-control" type="date" readonly="" max="1999-09-20" name="data"></div>
+                    <div class="form-group"><label for="name">Indirizzo</label><input style="text-transform:uppercase" value="<%out.print(myUser.getIndirizzo());%>" class="form-control item" type="text" readonly="" inputmode="latin-name" name="indirizzo"></div>
                     <div class="form-group"><label for="name">Città</label><input style="text-transform:uppercase" value="<%out.print(myUser.getCittà());%>"  class="form-control item" type="text" readonly="" inputmode="latin-name" name="citta"></div>
                     <div class="form-group"><label for="name">Provincia</label><input style="text-transform:uppercase" value="<%out.print(myUser.getProvincia());%>"  class="form-control item" type="text" readonly="" inputmode="latin-name" name="provincia"></div>
                     <div class="form-group"><label for="name">CAP</label><input style="text-transform:uppercase" value="<%out.print(myUser.getCap());%>"  class="form-control item" type="text" readonly="" inputmode="numeric" name="cap"></div>
@@ -151,8 +154,10 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>ACCEDI/REGISTRATI &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
                     <% if(logController.getAutenticato()==true) { %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<% out.print(logController.getIdUtente()); %>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <% } %>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.jsp">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
+<% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>                    <li class="nav-item" role="presentation"><a class="nav-link" href="shopping-cart.jsp">CARRELLO(0) &nbsp;<i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
         </div>
         </div>

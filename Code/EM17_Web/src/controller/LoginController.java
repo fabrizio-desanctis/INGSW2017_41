@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
-import models.dao.concrete.oracle.UserMySQLDAO;
+import models.dao.concrete.MySQL.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
 
 /**

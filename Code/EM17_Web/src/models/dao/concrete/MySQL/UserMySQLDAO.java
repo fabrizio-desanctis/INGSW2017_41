@@ -1,4 +1,4 @@
-package models.dao.concrete.oracle;
+package models.dao.concrete.MySQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,7 +53,7 @@ public class UserMySQLDAO implements UserDAO {
 						e1.printStackTrace();
 					}
 			       
-					u= new User(rs.getInt("id_utente"),rs.getString("nome"),rs.getString("cognome"),rs.getString("telefono"),rs.getString("citta"),rs.getString("provincia"),rs.getString("cap"),rs.getString("email"),rs.getString("password"),date,rs.getString("sesso"));
+					u= new User(rs.getInt("id_utente"),rs.getString("nome"),rs.getString("cognome"),rs.getString("telefono"),rs.getString("citta"),rs.getString("provincia"),rs.getString("cap"),rs.getString("email"),rs.getString("password"),date,rs.getString("sesso"),rs.getString("indirizzo"));
 					
 					
 				}
@@ -66,8 +66,8 @@ public class UserMySQLDAO implements UserDAO {
 	@Override
 	public boolean createNewUser(User u) {
 		ArrayList<Object> params = new ArrayList<>();
-	    String query = "INSERT INTO UTENTE (NOME,COGNOME,TELEFONO,SESSO,DATA_NASCITA,CITTA,PROVINCIA,CAP,EMAIL,PASSWORD) VALUES(?,"
-	    		+ "?,?,?,?,?,?,?,?,?)";
+	    String query = "INSERT INTO UTENTE (NOME,COGNOME,TELEFONO,SESSO,DATA_NASCITA,CITTA,PROVINCIA,CAP,EMAIL,PASSWORD,INDIRIZZO) VALUES(?,"
+	    		+ "?,?,?,?,?,?,?,?,?,?)";
 	    
 	    params.add(u.getNome());
 	    params.add(u.getCognome());
@@ -79,6 +79,7 @@ public class UserMySQLDAO implements UserDAO {
 	    params.add(u.getCap());
 	    params.add(u.getEmail());
 	    params.add(u.getPassword());
+	    params.add(u.getIndirizzo());
 	 
 	    try {
 	        Database.getInstance().execUpdate(query, params);
@@ -94,7 +95,7 @@ public class UserMySQLDAO implements UserDAO {
 	@Override
 	public boolean updateUser(User u){
 	    ArrayList<Object> params = new ArrayList<>();
-	    String query = "UPDATE USER SET  NOME = ?,COGNOME = ?,TELEFONO = ?,SESSO = ?, DATA_NASCITA = ?,CITTA = ?,PROVINCIA = ?,CAP = ? WHERE ID = ?";
+	    String query = "UPDATE USER SET  NOME = ?,COGNOME = ?,TELEFONO = ?,SESSO = ?, DATA_NASCITA = ?,CITTA = ?,PROVINCIA = ?,CAP = ?,INDIRIZZO=? WHERE ID = ?";
 	    params.add(u.getNome());
 	    params.add(u.getCognome());
 	    params.add(u.getTelefono());
@@ -103,7 +104,9 @@ public class UserMySQLDAO implements UserDAO {
 	    params.add(u.getCittà());
 	    params.add(u.getProvincia());
 	    params.add(u.getCap());
+	    params.add(u.getIndirizzo());
 	    params.add(u.getId());
+	   
 	    try {
 	        Database.getInstance().execUpdate(query, params);
 	    } catch (SQLException ex) {

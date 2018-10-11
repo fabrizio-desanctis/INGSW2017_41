@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
-import models.dao.concrete.oracle.UserMySQLDAO;
+import models.dao.concrete.MySQL.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
 
 
@@ -37,6 +37,7 @@ public class RegistrationController extends HttpServlet {
     	String numero = request.getParameter("telefono");
     	String sesso = request.getParameter("sesso");
     	String data = request.getParameter("data");
+    	String indirizzo = request.getParameter("indirizzo");
     	SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
     	String parameter = data;
     	Date date=null;
@@ -67,7 +68,7 @@ public class RegistrationController extends HttpServlet {
 		}
 		
 		if(user == null) {
-				User newUser = new User(0,nome,cognome,numero,citta,provincia,cap,email,password,date,sesso);
+				User newUser = new User(0,nome,cognome,numero,citta,provincia,cap,email,password,date,sesso,indirizzo);
 				usr.createNewUser(newUser);
 				view = request.getRequestDispatcher("registration-success.jsp");
 		}

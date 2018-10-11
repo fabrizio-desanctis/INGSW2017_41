@@ -1,4 +1,4 @@
-package models.dao.concrete.oracle;
+package models.dao.concrete.MySQL;
 
 import models.dao.interfaces.EventoDAO;
 import models.Evento;

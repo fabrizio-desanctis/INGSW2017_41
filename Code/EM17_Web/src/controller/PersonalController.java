@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.User;
-import models.dao.concrete.oracle.UserMySQLDAO;
+import models.dao.concrete.MySQL.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
 
 /**
@@ -60,6 +60,7 @@ public class PersonalController extends HttpServlet {
     	String numero = request.getParameter("telefono");
     	String sesso = request.getParameter("sesso");
     	String data = request.getParameter("data");
+    	String indirizzo =request.getParameter("indirizzo");
     	SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
     	String parameter = data;
     	Date date=null;
@@ -74,7 +75,7 @@ public class PersonalController extends HttpServlet {
     	String provincia = request.getParameter("provincia");
     	String cap = request.getParameter("cap");
     	
-		User myUser = new User(0,nome,cognome,numero,citta,provincia,cap,null,null,date,sesso);
+		User myUser = new User(0,nome,cognome,numero,citta,provincia,cap,null,null,date,sesso,indirizzo);
 		request.setAttribute("utente", myUser);
 		view = request.getRequestDispatcher("personal-update.jsp");
 		view.forward(request, response);

@@ -9,8 +9,17 @@ public class Ordine {
 	private String pdf;
 	private double totale,prezzo;
 	private String nome_evento;
+	private String linkImmagine;
 	
 	
+	public String getLinkImmagine() {
+		return linkImmagine;
+	}
+
+	public void setLinkImmagine(String linkImmagine) {
+		this.linkImmagine = linkImmagine;
+	}
+
 	public double getPrezzo() {
 		return prezzo;
 	}
@@ -45,7 +54,7 @@ public class Ordine {
 		
 	}
 	
-	public Ordine(int ido,int idu, int ide,int quantita,Date data,double totale,String pdf,double prezzo,String nome) {
+	public Ordine(int ido,int idu, int ide,int quantita,Date data,double totale,String pdf,double prezzo,String nome,String linki) {
 		this.id_ordine=ido;
 		this.id_utente=idu;
 		this.id_evento=ide;
@@ -55,6 +64,7 @@ public class Ordine {
 		this.pdf=pdf;
 		this.prezzo=prezzo;
 		this.nome_evento=nome;
+		this.linkImmagine=linki;
 		
 	}
 	

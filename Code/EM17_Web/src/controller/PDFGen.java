@@ -24,9 +24,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import models.Biglietto;
 import models.Carrello;
 import models.Ordine;
-import models.dao.concrete.oracle.BigliettoMySQLDAO;
-import models.dao.concrete.oracle.CarrelloMySQLDAO;
-import models.dao.concrete.oracle.OrdineMySQLDAO;
+import models.dao.concrete.MySQL.BigliettoMySQLDAO;
+import models.dao.concrete.MySQL.CarrelloMySQLDAO;
+import models.dao.concrete.MySQL.OrdineMySQLDAO;
 import models.dao.interfaces.BigliettoDAO;
 import models.dao.interfaces.CarrelloDAO;
 import models.dao.interfaces.OrdineDAO;
@@ -83,8 +83,19 @@ public class PDFGen extends HttpServlet {
     	            document.open();
     	            document.add( new Paragraph("EM '17", FONT1) );
     	            document.add(Chunk.NEWLINE);
+    	            document.add( new Paragraph("Nome evento: "+myOrdine.getNome_evento(), FONT2) );
+    	            document.add(Chunk.NEWLINE);
+    	            document.add( new Paragraph("Prezzo: "+myOrdine.getPrezzo(), FONT2) );
+    	            document.add(Chunk.NEWLINE);
+    	            document.add(Chunk.NEWLINE);
+    	            
+    	       
     	            document.add( new Paragraph("Posti acquistati: "+c.getQuantità(), FONT2) );
     	            document.add(Chunk.NEWLINE);
+    	            document.add( new Paragraph("Totale pagato: "+myOrdine.getTotale(), FONT2) );
+    	            document.add(Chunk.NEWLINE);
+    	            
+    	            
     	            document.add( new Paragraph("Grazie per aver acquistato! Ti ricordiamo che tutto ciè che ti occorre per accedere al tuo evento è il QR-Code.", FONT2) );
     	            document.add(Chunk.NEWLINE);
     	            int index=1;

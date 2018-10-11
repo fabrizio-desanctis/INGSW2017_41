@@ -6,7 +6,7 @@
     import="java.util.LinkedList"
     import="java.text.SimpleDateFormat"
 	import="java.util.Date"
-	import="models.dao.concrete.oracle.EventoMySQLDAO"
+	import="models.dao.concrete.MySQL.EventoMySQLDAO"
 	import="models.dao.interfaces.EventoDAO"
 	import="controller.LoginController"
 	import="controller.CarrelloController"
@@ -55,7 +55,10 @@
                     %>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="MyInfo?param=<%out.print(logController.getIdUtente());%>"><em>I miei dati/Logout &nbsp;</em><i class="fa fa-user-circle-o"></i></a></li> <%
  	}
- %>                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><em>i miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li>
+ %>                    <% if(logController.getAutenticato()==false) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.jsp"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
+                    <% if(logController.getAutenticato()==true) { %>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="Ordini?param=<% out.print(logController.getIdUtente()); %>"><em>I miei ordini &nbsp;</em><i class="fa fa-cloud"></i></a></li> <% } %>
 					<%
 						if(cart.statusCart(logController.getIdUtente())==false){
 					%>
