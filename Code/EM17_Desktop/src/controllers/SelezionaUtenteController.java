@@ -7,19 +7,14 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import models.Evento;
 import models.User;
-import models.dao.concrete.MySQL.EventoMySQLDAO;
 import models.dao.concrete.MySQL.UserMySQLDAO;
-import models.dao.interfaces.EventoDAO;
 import models.dao.interfaces.UserDAO;
-import views.SelezionaEventoWindow;
 import views.SelezionaUtenteWindow;
 
 
@@ -210,7 +205,7 @@ public class SelezionaUtenteController {
 		public void EliminaUtente() {
 			int row = table.getSelectedRow();
 			String valueOne=null;
-			String valueTwo=null;
+		
 			UserDAO usr = new UserMySQLDAO();
 			if(table.getRowCount() != 0) {
 				valueOne = table.getModel().getValueAt(row,11).toString();
