@@ -73,14 +73,9 @@ public LinkedList<Evento> getAllEventi () throws ParseException {
 
 @Override
 public ArrayList<Object> getInfoEventi (Evento e) {
-	String query = "select distinct \r\n" + 
-			"(select distinct nrbiglietti from Evento where id= ?) as nrbiglietti,\r\n" + 
-			"(select distinct count(*) from Biglietto where id_evento = ?)as venduti,\r\n" + 
-			"(select distinct count(*) from Ordine where b.id_order = o.id and b.id_evento = ?) as ordini\r\n" + 
-			"from evento e inner join biglietto b on e.id=b.id_evento inner join ordine o on o.id=b.id_order" ;
+	String query = "SELECT  EVENTO.NRBIGLIETTI, COUNT(ORDINE.QUANTITA) AS VENDUTI, COUNT(*) AS ORDINI FROM EVENTO INNER JOIN ORDINE ON EVENTO.ID=ORDINE.ID_EVENTO " + 
+			"WHERE EVENTO.ID=?";
 	ArrayList<Object> params = new ArrayList<>();
-	params.add(e.getId());
-	params.add(e.getId());
 	params.add(e.getId());
 	ArrayList<Object> list = new ArrayList<>();
 
@@ -91,9 +86,6 @@ public ArrayList<Object> getInfoEventi (Evento e) {
 			while(rs.next()){
 				
 					list.add(rs.getInt("venduti"));
-					System.out.println(rs.getInt("venduti"));
-					System.out.println(rs.getInt("nrbiglietti"));
-					System.out.println(rs.getInt("ordini"));
 					list.add(rs.getInt("nrbiglietti"));
 					list.add(rs.getInt("ordini"));
 				

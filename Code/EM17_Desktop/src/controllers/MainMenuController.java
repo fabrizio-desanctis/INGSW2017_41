@@ -98,5 +98,18 @@ public class MainMenuController {
 			SelezionaEventoController.start(3);
 		}
 	}
+	
+	
+	/*Questa classe interna gestisce il funzionamento del tasto Visualizza elimina utente*/
+	public class UtenteListener implements ActionListener {
+		
+		public UtenteListener () {
+		}
+		
+		public void actionPerformed(ActionEvent arg0) {
+			setInvisible();
+			SelezionaUtenteController.start(3);
+		}
+	}
 
 }

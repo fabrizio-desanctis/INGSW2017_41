@@ -9,9 +9,9 @@ public class User {
 	private int id;
 	private String nome, cognome, telefono,sesso, città, provincia,cap,email,password,indirizzo;
 	private Date dataNascita;
+	private double totale;
 	
-	
-	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, String sex,String indirizzo) {
+	public User(int i,String name,String cognom, String tel, String city, String prov, String cap, String mail, String pw, Date dt, String sex,String indirizzo,double tot) {
 		this.id=i;
 		this.nome=name;
 		this.cognome=cognom;
@@ -24,7 +24,7 @@ public class User {
 		this.dataNascita=dt;
 		this.sesso=sex;
 		this.indirizzo=indirizzo;
-		
+		this.totale=tot;
 	}
 	
 	public User() {
@@ -152,5 +152,13 @@ public class User {
 	        }
 	    return password;
 	    }
+
+	public double getTotale() {
+		return totale;
+	}
+
+	public void setTotale(double totale) {
+		this.totale = totale;
+	}
 	
 }

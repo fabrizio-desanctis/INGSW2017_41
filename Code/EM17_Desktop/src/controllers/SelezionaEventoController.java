@@ -353,7 +353,7 @@ public class SelezionaEventoController {
 			}
 			if(dialogResult == 0) {
 					setInvisible();
-					ArrayList<Object> params = null;
+					ArrayList<Object> params = new ArrayList<Object>();
 					params = e.getInfoEventi(eventoScelto);
 					VisualizzaStatisticheController.start(params);
 				

@@ -111,8 +111,8 @@ private static ArrayList<Object> myParam;
 	
 	public void caricaInfoEvento (JLabel venduti, JLabel nrOrdini) {
 			if(myParam != null && myParam.size()!= 0) {
-			venduti.setText(myParam.remove(0).toString() + "/" + myParam.remove(0).toString());
-			nrOrdini.setText(myParam.remove(0).toString());
+			venduti.setText(myParam.get(0).toString() + "/" + myParam.get(1).toString());
+			nrOrdini.setText(myParam.get(2).toString());
 			}
 		
 		

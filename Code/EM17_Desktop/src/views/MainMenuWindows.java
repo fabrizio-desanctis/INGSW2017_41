@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 
 
 
+
 /**
 *
 * @author Fabrizio De Sanctis
@@ -32,7 +33,7 @@ public class MainMenuWindows {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 338);
+		frame.setBounds(100, 100, 450, 384);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("EM'17 - Menù");
@@ -75,6 +76,11 @@ public class MainMenuWindows {
 		visualizzaStatisticheButton.setBounds(115, 228, 199, 34);
 		frame.getContentPane().add(visualizzaStatisticheButton);
 		
+		JButton utenteButton = new JButton("VISUALIZZA/ELIMINA UTENTE");
+		utenteButton.setFont(new Font("Arial Black", Font.BOLD, 8));
+		utenteButton.setBounds(115, 273, 199, 34);
+		frame.getContentPane().add(utenteButton);
+		
 		MainMenuController controller = new MainMenuController(); //Istanzia controller
 		MainMenuController.LogoutListener myLogoutListener = controller.new LogoutListener();
 		logoutButton.addActionListener(myLogoutListener);
@@ -86,10 +92,11 @@ public class MainMenuWindows {
 		eliminaEventoButton.addActionListener(myEliminaListener);
 		MainMenuController.StatisticheListener myStatListener = controller.new StatisticheListener();
 		visualizzaStatisticheButton.addActionListener(myStatListener);
+		MainMenuController.UtenteListener myUtenteListener = controller.new UtenteListener();
+		utenteButton.addActionListener(myUtenteListener);
 	}
 	
 	public JFrame getJFrame() {
 		return frame;
 	}
-	
 }
