@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.User;
-import models.dao.concrete.oracle.UserOracleDAO;
+import models.dao.concrete.oracle.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
 
 /**
@@ -36,7 +36,7 @@ public class PersonalController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idUtente = request.getParameter("param");
-		UserDAO usr = new UserOracleDAO();
+		UserDAO usr = new UserMySQLDAO();
 		User myUser=null;
 		RequestDispatcher view=null;
 		try {

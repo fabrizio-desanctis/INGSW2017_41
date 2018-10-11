@@ -6,14 +6,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Locale;
-
-import models.Evento;
 import models.User;
 import models.dao.interfaces.UserDAO;
 
-public class UserOracleDAO implements UserDAO {
+public class UserMySQLDAO implements UserDAO {
 
 	@Override
 	public User getUser (String user) throws ParseException {
@@ -22,7 +19,7 @@ public class UserOracleDAO implements UserDAO {
 		User u=null;
 		
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 					u= new User(rs.getInt("ID_UTENTE"),rs.getString("EMAIL"),rs.getString("PASSWORD"));
@@ -43,7 +40,7 @@ public class UserOracleDAO implements UserDAO {
 		User u=null;
 		
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 					SimpleDateFormat in = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.US);
@@ -69,7 +66,7 @@ public class UserOracleDAO implements UserDAO {
 	@Override
 	public boolean createNewUser(User u) {
 		ArrayList<Object> params = new ArrayList<>();
-	    String query = "INSERT INTO UTENTE (ID_UTENTE,NOME,COGNOME,TELEFONO,SESSO,DATA_NASCITA,CITTA,PROVINCIA,CAP,EMAIL,PASSWORD) VALUES(id_user_sequence.nextval,?,"
+	    String query = "INSERT INTO UTENTE (NOME,COGNOME,TELEFONO,SESSO,DATA_NASCITA,CITTA,PROVINCIA,CAP,EMAIL,PASSWORD) VALUES(?,"
 	    		+ "?,?,?,?,?,?,?,?,?)";
 	    
 	    params.add(u.getNome());
@@ -84,7 +81,7 @@ public class UserOracleDAO implements UserDAO {
 	    params.add(u.getPassword());
 	 
 	    try {
-	        Database.getInstance().execQuery(query, params);
+	        Database.getInstance().execUpdate(query, params);
 	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	        return false;
@@ -108,7 +105,7 @@ public class UserOracleDAO implements UserDAO {
 	    params.add(u.getCap());
 	    params.add(u.getId());
 	    try {
-	        Database.getInstance().execQuery(query, params);
+	        Database.getInstance().execUpdate(query, params);
 	    } catch (SQLException ex) {
 	        System.err.println(ex.getMessage());
 	        return false;

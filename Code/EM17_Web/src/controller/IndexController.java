@@ -12,10 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import models.Evento;
-import models.User;
-import models.dao.concrete.oracle.EventoOracleDAO;
+import models.dao.concrete.oracle.EventoMySQLDAO;
 import models.dao.interfaces.EventoDAO;
 
 /**
@@ -35,7 +33,7 @@ public class IndexController extends HttpServlet {
     
     
     public TreeSet<String> ListaLocalita () {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	TreeSet<String> list = new TreeSet<String>();
     	list= e.getListaLocalita();
     	return list;
@@ -43,7 +41,7 @@ public class IndexController extends HttpServlet {
     
     
     public LinkedList<Evento> getEventi () throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getPopolari();
@@ -61,7 +59,7 @@ public class IndexController extends HttpServlet {
     }
     
     public static LinkedList<Evento> getSport () throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getEventiSport();
@@ -73,7 +71,7 @@ public class IndexController extends HttpServlet {
     }
     
     public static LinkedList<Evento> getSpettacolo () throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getEventiSpettacolo();
@@ -85,7 +83,7 @@ public class IndexController extends HttpServlet {
     }
     
     public static LinkedList<Evento> getCultura () throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getEventiCultura();
@@ -97,7 +95,7 @@ public class IndexController extends HttpServlet {
     }
 	
     public static LinkedList<Evento> getConcerti () throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getEventiConcerti();
@@ -109,7 +107,7 @@ public class IndexController extends HttpServlet {
     }
     
     public static LinkedList<Evento> getEventoByID (String search) throws ParseException {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
     	LinkedList<Evento> returned = new LinkedList<Evento>();
     	list = e.getEventibyID(search);
@@ -179,7 +177,7 @@ public class IndexController extends HttpServlet {
     
     public void doPost(HttpServletRequest req, HttpServletResponse res)
     		throws ServletException, IOException  {
-    	EventoDAO e = new EventoOracleDAO();
+    	EventoDAO e = new EventoMySQLDAO();
     	List<Evento> list = new LinkedList<Evento>();
 		RequestDispatcher view;
 			try {

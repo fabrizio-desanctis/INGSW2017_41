@@ -1,4 +1,4 @@
-package models.dao.concrete.oracle;
+package models.dao.concrete.MySQL;
 
 import models.dao.interfaces.EventoDAO;
 import models.Evento;
@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.TreeSet;
 
-public class EventoOracleDAO implements EventoDAO{
+public class EventoMySQLDAO implements EventoDAO{
 	
 @Override
 public LinkedList<Evento> getListaEventi () throws ParseException {
@@ -22,7 +22,7 @@ public LinkedList<Evento> getListaEventi () throws ParseException {
 	Date today = new Date(System.currentTimeMillis());
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				try {
@@ -51,7 +51,7 @@ public LinkedList<Evento> getAllEventi () throws ParseException {
 
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				try {
@@ -86,7 +86,7 @@ public ArrayList<Object> getInfoEventi (Evento e) {
 
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				
@@ -114,7 +114,7 @@ public TreeSet<String> getListaLocalita () {
 	TreeSet<String> list = new TreeSet<String>();
 
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				String s = new String(rs.getString("NOME"));
@@ -129,7 +129,7 @@ public TreeSet<String> getListaLocalita () {
 
 public boolean createNewEvento(Evento e) {
 	ArrayList<Object> params = new ArrayList<>();
-    String query = "INSERT INTO EVENTO (ID,NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE,TIPOLOGIA) VALUES(id_event_sequence.nextval,?,"
+    String query = "INSERT INTO EVENTO (NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE,TIPOLOGIA) VALUES(?,"
     		+ "?,?,?,?,?,?,?,?)";
     
     params.add(e.getNome());
@@ -146,7 +146,7 @@ public boolean createNewEvento(Evento e) {
     params.add(e.getLinkImmagine());
     params.add(e.getTipologia());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
     	System.err.println(ex.getMessage());
         return false;
@@ -163,7 +163,7 @@ public boolean deleteEvento(Evento e){
     params.add(e.getNome());
     params.add(e.getData().toString());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
         System.err.println(ex.getMessage());
         return false;
@@ -192,7 +192,7 @@ public boolean updateEvento(Evento e){
     params.add(e.getTipologia());
     params.add(e.getId());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
         System.err.println(ex.getMessage());
         return false;

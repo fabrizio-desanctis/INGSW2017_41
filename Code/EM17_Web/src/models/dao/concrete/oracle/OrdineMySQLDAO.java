@@ -5,12 +5,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-
-import models.Evento;
 import models.Ordine;
 import models.dao.interfaces.OrdineDAO;
 
-public class OrdineOracleDAO implements OrdineDAO {
+public class OrdineMySQLDAO implements OrdineDAO {
 	
 	public boolean getOrdinebyId (String id) throws ParseException {
 		String query = "select id_ordine from ordine where id_ordine="+id;
@@ -19,7 +17,7 @@ public class OrdineOracleDAO implements OrdineDAO {
 
 		
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 						value=true;
@@ -36,11 +34,11 @@ public class OrdineOracleDAO implements OrdineDAO {
 		String query = "select id_ordine,totale,evento.nome,evento.prezzo,quantita,pdflink from ordine inner join evento on ordine.id_evento=evento.id " + 
 				"where id_ordine="+id;
 		ArrayList<Object> params = null;
-		boolean value=false;
+		
 		Ordine o = null;
 		
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 						o = new Ordine(Integer.parseInt(rs.getString("id_ordine")),0, 0,rs.getInt("quantita"),null,rs.getDouble("totale"),rs.getString("pdflink"),rs.getDouble("prezzo"),rs.getString("nome"));
@@ -68,7 +66,7 @@ public class OrdineOracleDAO implements OrdineDAO {
 	    params.add(pdf);
 	    
 	    try {
-	        Database.getInstance().execQuery(query, params);
+	        Database.getInstance().execUpdate(query.toUpperCase(), params);
 	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	        return false;

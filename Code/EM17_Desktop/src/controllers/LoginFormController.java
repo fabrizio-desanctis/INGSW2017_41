@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import models.Amministratore;
-import models.dao.concrete.oracle.AmministratoreOracleDAO;
+import models.dao.concrete.MySQL.AmministratoreMySQLDAO;
 import models.dao.interfaces.AmministratoreDAO;
 import views.LoginForm;
 
@@ -81,7 +81,7 @@ public class LoginFormController {
 		
 		public void actionPerformed(ActionEvent arg0) {
 			boolean matching=false;
-			a = new AmministratoreOracleDAO(); //Da cambiare se si cambia tipo Database.
+			a = new AmministratoreMySQLDAO(); //Da cambiare se si cambia tipo Database.
 			for(Amministratore x: a.getAmministratoriList()) {
 				String md5Password= Amministratore.convertPasswd(String.valueOf(passwordField.getPassword()));
 				if(md5Password.equals(x.getPassword()) && usernameField.getText().equals(x.getUsername())) {

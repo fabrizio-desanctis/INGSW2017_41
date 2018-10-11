@@ -1,23 +1,19 @@
 package controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import models.User;
-import models.dao.concrete.oracle.UserOracleDAO;
+import models.dao.concrete.oracle.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
-import oracle.sql.DATE;
+
 
 /**
  * Servlet implementation class RegistrationController
@@ -59,7 +55,7 @@ public class RegistrationController extends HttpServlet {
     	
 
     	RequestDispatcher view=null;
-		UserDAO usr = new UserOracleDAO();
+		UserDAO usr = new UserMySQLDAO();
 		User user = null;
 
 		try {

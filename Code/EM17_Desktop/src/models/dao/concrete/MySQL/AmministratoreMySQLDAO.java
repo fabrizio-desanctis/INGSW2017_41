@@ -1,4 +1,4 @@
-package models.dao.concrete.oracle;
+package models.dao.concrete.MySQL;
 
 import models.Amministratore;
 import models.dao.interfaces.AmministratoreDAO;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 * @author Fabrizio De Sanctis
 */
 
-public class AmministratoreOracleDAO implements AmministratoreDAO {
+public class AmministratoreMySQLDAO implements AmministratoreDAO {
 	@Override
 	public List<Amministratore> getAmministratoriList () {
 		
@@ -22,7 +22,7 @@ public class AmministratoreOracleDAO implements AmministratoreDAO {
 		List<Amministratore> list = new ArrayList<>();
     
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 					Amministratore a = new Amministratore(rs.getString("USERNAME"),rs.getString("MD5_PASSWORD"));

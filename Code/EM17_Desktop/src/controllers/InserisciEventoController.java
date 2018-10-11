@@ -17,7 +17,7 @@ import javax.swing.text.PlainDocument;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
 import models.Evento;
-import models.dao.concrete.oracle.EventoOracleDAO;
+import models.dao.concrete.MySQL.EventoMySQLDAO;
 import models.dao.interfaces.EventoDAO;
 import views.InserisciEventoWindow;
 
@@ -55,7 +55,7 @@ private static JFrame myFrame;
 	
 
 	public static void addItemToComboBox (JComboBox<String> localitaComboBox) {
-		EventoDAO e = new EventoOracleDAO ();
+		EventoDAO e = new EventoMySQLDAO ();
 		for(String s: e.getListaLocalita()) {
 			localitaComboBox.addItem(s);
 			
@@ -308,7 +308,7 @@ private static JFrame myFrame;
 				String prezzo=eurField.getText()+"."+centField.getText();
 				myEvento.setPrezzo(Float.parseFloat(prezzo));
 				myEvento.setTipologia((String)tipologiaComboBox.getSelectedItem());
-				EventoDAO ed = new EventoOracleDAO();
+				EventoDAO ed = new EventoMySQLDAO();
 				String myMessage = new String();
 				myMessage= "TIPOLOGIA: "+ myEvento.getTipologia()+"\n";;
 				myMessage+= "NOME EVENTO: "+myEvento.getNome()+"\n";

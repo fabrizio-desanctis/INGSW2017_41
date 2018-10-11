@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.Evento;
-import models.dao.concrete.oracle.EventoOracleDAO;
+import models.dao.concrete.MySQL.EventoMySQLDAO;
 import models.dao.interfaces.EventoDAO;
 import views.SelezionaEventoWindow;
 
@@ -116,7 +116,7 @@ public class SelezionaEventoController {
 	public void getTable (JTable table) throws ParseException {
 		String[] colName = { "NOME EVENTO", "DATA"};
 		LinkedList<Evento> list= null;
-		EventoDAO e = new EventoOracleDAO();
+		EventoDAO e = new EventoMySQLDAO();
 		if(scelta != 3) {
 		list = e.getListaEventi();
 		}
@@ -210,7 +210,7 @@ public class SelezionaEventoController {
 			
 			boolean found = false;
 			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			EventoDAO e = new EventoOracleDAO();
+			EventoDAO e = new EventoMySQLDAO();
 			LinkedList<Evento> list=null;
 			try {
 				list = e.getListaEventi();
@@ -265,7 +265,7 @@ public class SelezionaEventoController {
 			
 			boolean found = false;
 			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			EventoDAO e = new EventoOracleDAO();
+			EventoDAO e = new EventoMySQLDAO();
 			LinkedList<Evento> list=null;
 			try {
 				list = e.getListaEventi();
@@ -317,7 +317,7 @@ public class SelezionaEventoController {
 			
 			boolean found = false;
 			SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			EventoDAO e = new EventoOracleDAO();
+			EventoDAO e = new EventoMySQLDAO();
 			LinkedList<Evento> list=null;
 			try {
 				list = e.getAllEventi();

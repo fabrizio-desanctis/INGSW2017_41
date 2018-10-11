@@ -3,25 +3,16 @@ package controller;
 import java.io.IOException;
 
 import java.text.ParseException;
-import java.util.Date;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.itextpdf.text.DocumentException;
-
 import controller.LoginController;
-import models.Biglietto;
 import models.Carrello;
-import models.Ordine;
-import models.dao.concrete.oracle.BigliettoOracleDAO;
-import models.dao.concrete.oracle.CarrelloOracleDAO;
-import models.dao.concrete.oracle.OrdineOracleDAO;
-import models.dao.interfaces.BigliettoDAO;
+import models.dao.concrete.oracle.CarrelloMySQLDAO;
+import models.dao.concrete.oracle.OrdineMySQLDAO;
 import models.dao.interfaces.CarrelloDAO;
 import models.dao.interfaces.OrdineDAO;
 /**
@@ -44,12 +35,10 @@ public class PagamentoController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("param");
-		OrdineDAO ord = new OrdineOracleDAO();
-		CarrelloDAO car = new CarrelloOracleDAO();
-		BigliettoDAO bigl = new BigliettoOracleDAO();
+		OrdineDAO ord = new OrdineMySQLDAO();
+		CarrelloDAO car = new CarrelloMySQLDAO();
 		LoginController control= new LoginController();
 		RequestDispatcher view = null;
-		Ordine myOrdine = null;
 		
 		try {
 			if(ord.getOrdinebyId(id)==false) {

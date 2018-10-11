@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.TreeSet;
 
-public class EventoOracleDAO implements EventoDAO{
+public class EventoMySQLDAO implements EventoDAO{
 	
 @Override
 public LinkedList<Evento> getListaEventi () throws ParseException {
@@ -22,7 +22,7 @@ public LinkedList<Evento> getListaEventi () throws ParseException {
 	Date today = new Date(System.currentTimeMillis());
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				try {
@@ -50,7 +50,7 @@ public LinkedList<Evento> getPopolari () throws ParseException {
 	Date today = new Date(System.currentTimeMillis());
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				try {
@@ -80,7 +80,7 @@ public int getRestanti (int id_evento) throws ParseException {
 	int ritorno=0;
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				ritorno= rs.getInt("restanti");
@@ -103,7 +103,7 @@ public LinkedList<Evento> getAllEventi () throws ParseException {
 
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				try {
@@ -138,7 +138,7 @@ public ArrayList<Object> getInfoEventi (Evento e) {
 
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				
@@ -166,7 +166,7 @@ public ArrayList<Evento> getEventiFromSearch (String search ) throws ParseExcept
 	Date today = new Date();
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -190,10 +190,10 @@ public Evento getEventoCarrello (String utente) throws ParseException {
 			"where utente.id_utente=" + utente;
 	ArrayList<Object> params = null;
 	Evento e = null;
-	Date today = new Date();
+	
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				    SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -217,10 +217,10 @@ public ArrayList<Evento> getEventibyID (String search ) throws ParseException {
 	String query = "select * from Evento where id="+search;
 	ArrayList<Object> params = null;
 	ArrayList<Evento> list = new ArrayList<>();
-	Date today = new Date();
+	
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -244,7 +244,7 @@ public ArrayList<Evento> getEventiSport () throws ParseException {
 	Date today = new Date();
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -269,7 +269,7 @@ public ArrayList<Evento> getEventiSpettacolo () throws ParseException {
 	Date today = new Date();
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -293,7 +293,7 @@ public ArrayList<Evento> getEventiConcerti () throws ParseException {
 	Date today = new Date();
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -318,7 +318,7 @@ public ArrayList<Evento> getEventiCultura () throws ParseException {
 	Date today = new Date();
 	
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 					SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy",Locale.US);
@@ -343,7 +343,7 @@ public TreeSet<String> getListaLocalita () {
 	TreeSet<String> list = new TreeSet<String>();
 
 	try {
-		ResultSet rs = Database.getInstance().execQuery(query, params);
+		ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 		if(rs!= null){
 			while(rs.next()){
 				String s = new String(rs.getString("NOME"));
@@ -358,7 +358,7 @@ public TreeSet<String> getListaLocalita () {
 
 public boolean createNewEvento(Evento e) {
 	ArrayList<Object> params = new ArrayList<>();
-    String query = "INSERT INTO EVENTO (ID,NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE,TIPOLOGIA) VALUES(id_event_sequence.nextval,?,"
+    String query = "INSERT INTO EVENTO (NOME,DATA,LUOGO,LOCALITA,PREZZO,NRBIGLIETTI,DESCRIZIONE,LINKIMMAGINE,TIPOLOGIA) VALUES(?,"
     		+ "?,?,?,?,?,?,?,?)";
     
     params.add(e.getNome());
@@ -375,7 +375,7 @@ public boolean createNewEvento(Evento e) {
     params.add(e.getLinkImmagine());
     params.add(e.getTipologia());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
     	System.err.println(ex.getMessage());
         return false;
@@ -392,7 +392,7 @@ public boolean deleteEvento(Evento e){
     params.add(e.getNome());
     params.add(e.getData().toString());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
         System.err.println(ex.getMessage());
         return false;
@@ -421,7 +421,7 @@ public boolean updateEvento(Evento e){
     params.add(e.getTipologia());
     params.add(e.getId());
     try {
-        Database.getInstance().execQuery(query, params);
+        Database.getInstance().execUpdate(query.toUpperCase(), params);
     } catch (SQLException ex) {
         System.err.println(ex.getMessage());
         return false;

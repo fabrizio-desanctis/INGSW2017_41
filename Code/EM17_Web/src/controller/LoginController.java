@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
-import models.dao.concrete.oracle.UserOracleDAO;
+import models.dao.concrete.oracle.UserMySQLDAO;
 import models.dao.interfaces.UserDAO;
 
 /**
@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet {
 		String email  = request.getParameter("user").toString();
 		String password = User.convertPasswd(request.getParameter("password")).toString();
 		RequestDispatcher view=null;
-		UserDAO usr = new UserOracleDAO();
+		UserDAO usr = new UserMySQLDAO();
 		User user = null;
 		ArrayList<Integer> error = new ArrayList<Integer>(2);
 		error.add(0,0);

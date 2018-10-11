@@ -4,17 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
 import models.Carrello;
-import models.Evento;
 import models.dao.interfaces.CarrelloDAO;
 
-public class CarrelloOracleDAO implements CarrelloDAO {
+public class CarrelloMySQLDAO implements CarrelloDAO {
 
 	
 	public boolean createNewCarrello(int id_utente,int id_evento,int quantita) {
 		ArrayList<Object> params = new ArrayList<>();
-	    String query = "INSERT INTO CARRELLO (ID_CARRELLO,ID_EVENTO,ID_UTENTE,QUANTITA) VALUES(id_carrello_sequence.nextval,?,"
+	    String query = "INSERT INTO CARRELLO (ID_EVENTO,ID_UTENTE,QUANTITA) VALUES(?,"
 	    		+ "?,?)";
 	    
 	    params.add(id_evento);
@@ -22,7 +20,7 @@ public class CarrelloOracleDAO implements CarrelloDAO {
 	    params.add(quantita);
 	    
 	    try {
-	        Database.getInstance().execQuery(query, params);
+	        Database.getInstance().execUpdate(query, params);
 	    } catch (SQLException ex) {
 	    	System.err.println(ex.getMessage());
 	        return false;
@@ -39,7 +37,7 @@ public class CarrelloOracleDAO implements CarrelloDAO {
 
 		
 		try {
-			ResultSet rs = Database.getInstance().execQuery(query, params);
+			ResultSet rs = Database.getInstance().execQuery(query.toUpperCase(), params);
 			if(rs!= null){
 				while(rs.next()){
 						c= new Carrello(rs.getInt("id_carrello"),rs.getInt("id_utente"),rs.getInt("id_evento"),rs.getInt("quantita"));
@@ -58,7 +56,7 @@ public class CarrelloOracleDAO implements CarrelloDAO {
 	    params.add(utente);
 	    
 	    try {
-	        Database.getInstance().execQuery(query, params);
+	        Database.getInstance().execUpdate(query, params);
 	    } catch (SQLException ex) {
 	        System.err.println(ex.getMessage());
 	        return false;

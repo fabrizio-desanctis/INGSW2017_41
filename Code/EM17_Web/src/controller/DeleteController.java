@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.dao.concrete.oracle.CarrelloOracleDAO;
+import models.dao.concrete.oracle.CarrelloMySQLDAO;
 import models.dao.interfaces.CarrelloDAO;
 
 /**
@@ -32,7 +32,7 @@ public class DeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id=request.getParameter("param");
-		CarrelloDAO cart = new CarrelloOracleDAO();
+		CarrelloDAO cart = new CarrelloMySQLDAO();
 		RequestDispatcher view=null;
 		cart.deleteCarrello(Integer.parseInt(id));
 		view = request.getRequestDispatcher("index.jsp");

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.dao.concrete.oracle.CarrelloOracleDAO;
+import models.dao.concrete.oracle.CarrelloMySQLDAO;
 import models.dao.interfaces.CarrelloDAO;
 
 /**
@@ -49,7 +49,7 @@ public class ProductController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String quantita=request.getParameter("quantita");
-		CarrelloDAO cart = new CarrelloOracleDAO();
+		CarrelloDAO cart = new CarrelloMySQLDAO();
 		RequestDispatcher view=null;
 		cart.createNewCarrello(new LoginController().getIdUtente(), getIdEvento(), Integer.parseInt(quantita));
 		view = request.getRequestDispatcher("index.jsp");

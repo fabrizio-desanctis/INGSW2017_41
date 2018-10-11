@@ -8,7 +8,7 @@
     import="java.util.Calendar"
     import="java.util.Date"
     import="models.dao.interfaces.EventoDAO"
-    import="models.dao.concrete.oracle.EventoOracleDAO"%>
+    import="models.dao.concrete.oracle.EventoMySQLDAO"%>
 <!DOCTYPE html>
 <html>
 	<%LoginController logController = new LoginController(); %>

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Evento;
-import models.dao.concrete.oracle.CarrelloOracleDAO;
-import models.dao.concrete.oracle.EventoOracleDAO;
+import models.dao.concrete.oracle.CarrelloMySQLDAO;
+import models.dao.concrete.oracle.EventoMySQLDAO;
 import models.dao.interfaces.CarrelloDAO;
 import models.dao.interfaces.EventoDAO;
 
@@ -41,7 +41,7 @@ public class CarrelloController extends HttpServlet {
     }
     
     public boolean statusCart (int id_utente) {
-    	EventoDAO evento = new EventoOracleDAO();
+    	EventoDAO evento = new EventoMySQLDAO();
 		Evento myevento = new Evento();
 		try {
 			myevento = evento.getEventoCarrello(Integer.toString(id_utente));
@@ -62,10 +62,10 @@ public class CarrelloController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id_utente=request.getParameter("param");
-		EventoDAO evento = new EventoOracleDAO();
+		EventoDAO evento = new EventoMySQLDAO();
 		Evento myevento = new Evento();
 		RequestDispatcher view = null;
-		CarrelloDAO car = new CarrelloOracleDAO();
+		CarrelloDAO car = new CarrelloMySQLDAO();
 		Date today = new Date();
 		try {
 			myevento = evento.getEventoCarrello(id_utente);
