@@ -136,6 +136,8 @@
                                             <% if(cart.statusCart(utente)==true || logController.getAutenticato()==false || restanti==0){ %>
                                             <button disabled class="btn btn-primary" type="submit"><i class="icon-basket"></i>Aggiungi al carrello</button>
                                             <% if(restanti==0){ %> <span style="color:red"><strong>SOLD OUT</strong></span> <% } %>
+                                            <br>
+                                            <% if(logController.getAutenticato()==false){ %> <span style="color:red"><strong>EFFETTUA IL LOGIN PER ACQUISTARE</strong></span> <% } %>
                                             
                                             	
                                             <% } %></div> 

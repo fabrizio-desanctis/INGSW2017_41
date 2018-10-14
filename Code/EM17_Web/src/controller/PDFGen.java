@@ -85,14 +85,14 @@ public class PDFGen extends HttpServlet {
     	            document.add(Chunk.NEWLINE);
     	            document.add( new Paragraph("Nome evento: "+myOrdine.getNome_evento(), FONT2) );
     	            document.add(Chunk.NEWLINE);
-    	            document.add( new Paragraph("Prezzo: "+myOrdine.getPrezzo(), FONT2) );
+    	            document.add( new Paragraph("Prezzo: "+myOrdine.getPrezzo()+" EUR", FONT2) );
     	            document.add(Chunk.NEWLINE);
     	            document.add(Chunk.NEWLINE);
     	            
     	       
     	            document.add( new Paragraph("Posti acquistati: "+c.getQuantità(), FONT2) );
     	            document.add(Chunk.NEWLINE);
-    	            document.add( new Paragraph("Totale pagato: "+myOrdine.getTotale(), FONT2) );
+    	            document.add( new Paragraph("Totale pagato: "+myOrdine.getTotale()+ " EUR", FONT2) );
     	            document.add(Chunk.NEWLINE);
     	            
     	            
@@ -102,7 +102,7 @@ public class PDFGen extends HttpServlet {
     	            for(Integer i: bigl.getListaBiglietti(Integer.toString(myOrdine.getId_ordine()))) {
     	            BarcodeQRCode barcodeQRCode = new BarcodeQRCode(i.toString(), 1000, 1000, null);
 					Image codeQrImage = barcodeQRCode.getImage();
-					codeQrImage.scaleAbsolute(100, 100);
+					codeQrImage.scaleAbsolute(200, 200);
 					document.add( new Paragraph("QR CODE "+index, FONT1) );
 					index++;
 					document.add(codeQrImage); 
