@@ -14,6 +14,10 @@ public class Amministratore {
  
     private String username;
     private String password;
+    
+    public Amministratore() {
+    	
+    }
    
     public Amministratore(String User,String pw){
         this.username=User;
